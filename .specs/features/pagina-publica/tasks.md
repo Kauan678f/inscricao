@@ -225,12 +225,12 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Pergunta 1: Radio group "Sim/Não" com name="cristao"
-- [ ] Pergunta 2: Input text com name="tempo_cristao" e label
-- [ ] Pergunta 3: Radio group "Sim/Não" com name="batizado_aguas"
-- [ ] Pergunta 4: Radio group "Sim/Não/Prefiro não responder" com name="batizado_espirito"
-- [ ] Todos os campos com labels acessíveis (for/id)
-- [ ] Estilos de radio buttons customizados
+- [x] Pergunta 1: Radio group "Sim/Não" com name="cristao"
+- [x] Pergunta 2: Input text com name="tempo_cristao" e label
+- [x] Pergunta 3: Radio group "Sim/Não" com name="batizado_aguas"
+- [x] Pergunta 4: Radio group "Sim/Não/Prefiro não responder" com name="batizado_espirito"
+- [x] Todos os campos com labels acessíveis (for/id)
+- [x] Estilos de radio buttons customizados
 
 **Verify**: Todos os 4 campos visíveis e interativos, radio buttons funcionam corretamente.
 

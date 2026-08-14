@@ -61,7 +61,66 @@
         <section id="inscricao" class="section container">
             <h2 class="text-center">Formulário de Inscrição</h2>
             <form id="form-inscricao" class="form-container" novalidate>
-                <!-- Os campos do formulário serão adicionados aqui -->
+                
+                <!-- Pergunta 1 -->
+                <div class="form-group" id="group-cristao">
+                    <span class="form-label">1. Você é cristão? *</span>
+                    <div class="radio-group">
+                        <label class="radio-label" for="cristao-sim">
+                            <input type="radio" id="cristao-sim" name="cristao" value="Sim" class="radio-input" required>
+                            Sim
+                        </label>
+                        <label class="radio-label" for="cristao-nao">
+                            <input type="radio" id="cristao-nao" name="cristao" value="Não" class="radio-input">
+                            Não
+                        </label>
+                    </div>
+                    <span class="error-message">Por favor, selecione uma opção.</span>
+                </div>
+
+                <!-- Pergunta 2 -->
+                <div class="form-group" id="group-tempo-cristao">
+                    <label for="tempo_cristao" class="form-label">2. Há quanto tempo você é cristão? *</label>
+                    <input type="text" id="tempo_cristao" name="tempo_cristao" class="form-input" placeholder="Ex: 5 anos, nasci em lar cristão, etc." required>
+                    <span class="error-message">Este campo é obrigatório.</span>
+                </div>
+
+                <!-- Pergunta 3 -->
+                <div class="form-group" id="group-batizado-aguas">
+                    <span class="form-label">3. Você é batizado nas águas? *</span>
+                    <div class="radio-group">
+                        <label class="radio-label" for="aguas-sim">
+                            <input type="radio" id="aguas-sim" name="batizado_aguas" value="Sim" class="radio-input" required>
+                            Sim
+                        </label>
+                        <label class="radio-label" for="aguas-nao">
+                            <input type="radio" id="aguas-nao" name="batizado_aguas" value="Não" class="radio-input">
+                            Não
+                        </label>
+                    </div>
+                    <span class="error-message">Por favor, selecione uma opção.</span>
+                </div>
+
+                <!-- Pergunta 4 -->
+                <div class="form-group" id="group-batizado-espirito">
+                    <span class="form-label">4. Você é batizado no Espírito Santo? *</span>
+                    <div class="radio-group">
+                        <label class="radio-label" for="espirito-sim">
+                            <input type="radio" id="espirito-sim" name="batizado_espirito" value="Sim" class="radio-input" required>
+                            Sim
+                        </label>
+                        <label class="radio-label" for="espirito-nao">
+                            <input type="radio" id="espirito-nao" name="batizado_espirito" value="Não" class="radio-input">
+                            Não
+                        </label>
+                        <label class="radio-label" for="espirito-prefiro">
+                            <input type="radio" id="espirito-prefiro" name="batizado_espirito" value="Prefiro não responder" class="radio-input">
+                            Prefiro não responder
+                        </label>
+                    </div>
+                    <span class="error-message">Por favor, selecione uma opção.</span>
+                </div>
+
             </form>
         </section>
     </main>
