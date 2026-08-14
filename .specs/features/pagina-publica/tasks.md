@@ -201,11 +201,11 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Tag `<section>` com id="inscricao"
-- [ ] Tag `<form>` com id="form-inscricao" e atributo novalidate
-- [ ] Estilos para form groups, labels, inputs, radio buttons e textareas
-- [ ] Layout mobile-first para campos de formulário
-- [ ] Título da seção "Formulário de Inscrição"
+- [x] Tag `<section>` com id="inscricao"
+- [x] Tag `<form>` com id="form-inscricao" e atributo novalidate
+- [x] Estilos para form groups, labels, inputs, radio buttons e textareas
+- [x] Layout mobile-first para campos de formulário
+- [x] Título da seção "Formulário de Inscrição"
 
 **Verify**: Formulário vazio renderiza com estilos corretos em mobile e desktop.
 
