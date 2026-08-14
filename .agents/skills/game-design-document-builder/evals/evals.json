@@ -1,0 +1,17 @@
+{
+  "skill_name": "game-design-document-builder",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Vou fazer um jogo de terror espacial 2D indie sozinho. O núcleo é manter a nave consertada enquanto um monstro invisível te caça pelo som. Pode criar um GDD Simplificado pra mim?",
+      "assertions": [],
+      "expected_output": "A simplified GDD structured for a solo indie dev, focusing heavily on clear mechanics for sound tracking, ship repair systems, and technical guidelines."
+    },
+    {
+      "id": 1,
+      "prompt": "Temos uma equipe de 30 pessoas fazendo um RPG tático por turnos complexo focado em terrenos elementais. Preciso que você detalhe o sistema de combate, os inputs e outputs de estados mágicos num formato de GDD completo.",
+      "assertions": [],
+      "expected_output": "A highly detailed, comprehensive section of a GDD covering complex elemental combat mechanics, precise definitions of inputs/outputs, state machines, and descriptive text diagrams."
+    }
+  ]
+}

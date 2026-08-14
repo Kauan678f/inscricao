@@ -1,0 +1,11 @@
+{
+  "skill_name": "game-production-planner",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Sou um dev solo fazendo um metroidvania 2D simples focado em exploração. O GDD tá pronto. Como eu devo organizar minhas tarefas pros próximos 6 meses? Quero algo realista.",
+      "assertions": [],
+      "expected_output": "A practical 6-month roadmap for a solo developer utilizing Kanban, breaking down programming, art, and level design into a logical sequence starting with the MVP."
+    }
+  ]
+}

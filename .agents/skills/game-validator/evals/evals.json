@@ -1,0 +1,11 @@
+{
+  "skill_name": "game-validator",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Meu jogo é um battle royale de 100 jogadores, mas o combate é por turnos e baseado em xadrez. Você tem 1 minuto por turno. O que os jogadores e o mercado achariam disso?",
+      "assertions": [],
+      "expected_output": "A critical validation outlining the severe pacing issue, simulating frustration from playtesters due to extreme waiting times, and predicting a high market failure risk due to conflicting genres."
+    }
+  ]
+}

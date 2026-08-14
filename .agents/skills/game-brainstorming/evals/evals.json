@@ -1,0 +1,17 @@
+{
+  "skill_name": "game-brainstorming",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Quero criar um jogo RPG roguelite com temática brasileira. O que você acha? Me dê ideias para o loop de gameplay e possíveis personagens.",
+      "assertions": [],
+      "expected_output": "Ideas for a Brazilian-themed roguelite RPG, including gameplay loop, character suggestions, and ending with strategic questions."
+    },
+    {
+      "id": 1,
+      "prompt": "Estou pensando num jogo mobile casual onde você gerencia uma padaria, mas os clientes são todos monstros. Quais seriam umas mecânicas únicas pra isso? E qual seria o conflito principal?",
+      "assertions": [],
+      "expected_output": "Brainstorming for a casual monster bakery mobile game, detailing unique mechanics and the main conflict, plus strategic questions at the end."
+    }
+  ]
+}

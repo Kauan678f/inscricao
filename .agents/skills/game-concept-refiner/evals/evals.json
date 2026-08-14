@@ -1,0 +1,17 @@
+{
+  "skill_name": "game-concept-refiner",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Estou desenvolvendo um MMORPG de mundo aberto colossal focado em sobrevivência onde tudo no mundo pode ser destruído livremente, tem um sistema de craft de 2.000 itens base e economia realista com 5 moedas. Além disso, tem combate hack and slash em tempo real e dezenas de montarias complexas.",
+      "assertions": [],
+      "expected_output": "Constructive critique highlighting extreme scope bloat, suggesting major cuts to simplify the crafting and economy, providing references to simpler successful models, and warning about technical viability of fully destructible MMO worlds."
+    },
+    {
+      "id": 1,
+      "prompt": "Minha ideia é um jogo puzzle-platformer onde o protagonista controla a gravidade 2D, mas eu também quero adicionar elementos de tower defense a cada 5 fases. Como podemos melhorar e estruturar essa ideia?",
+      "assertions": [],
+      "expected_output": "Refining the core logic, pointing out the potential conflict in pacing between the puzzle-platforming and tower defense, suggesting ways to blend the mechanics smoothly, and providing a scope assessment."
+    }
+  ]
+}
