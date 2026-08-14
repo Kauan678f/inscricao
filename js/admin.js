@@ -176,10 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div>${formatDate(inscricao.created_at)}</div>
                 </div>
                 <div>
-                    <strong style="color: var(--color-text-muted);">ID no Banco:</strong>
-                    <div style="font-size: var(--font-size-sm); color: var(--color-text-muted);">${inscricao.id}</div>
-                </div>
-                <div>
                     <strong style="color: var(--color-text-muted);">É Cristão?</strong>
                     <div>${formatBool(inscricao.cristao)} (Há ${inscricao.tempo_cristao || '-'})</div>
                 </div>
