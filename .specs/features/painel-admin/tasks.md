@@ -121,15 +121,15 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Função `carregarInscritos()` que faz SELECT na tabela inscricoes via service_role key
-- [ ] Renderização de tabela HTML com colunas: Data, Cristão, Batizado Águas, Espírito Santo, Comunhão
-- [ ] Valores boolean exibidos como "Sim"/"Não"
-- [ ] Data formatada no padrão DD/MM/AAAA
-- [ ] Ordenação por created_at DESC (mais recente primeiro)
-- [ ] Total de inscritos atualizado no badge/card
-- [ ] Estado vazio: mensagem "Nenhuma inscrição encontrada"
-- [ ] Erro na consulta: mensagem de erro exibida
-- [ ] Cada row clicável (cursor pointer, evento de clique)
+- [x] Função `carregarInscritos()` que faz SELECT na tabela inscricoes via service_role key
+- [x] Renderização de tabela HTML com colunas: Data, Nome, Cristão, Batizado Águas, Espírito Santo, Comunhão
+- [x] Valores boolean exibidos como "Sim"/"Não"
+- [x] Data formatada no padrão DD/MM/AAAA
+- [x] Ordenação por created_at DESC (mais recente primeiro)
+- [x] Total de inscritos atualizado no badge/card
+- [x] Estado vazio: mensagem "Nenhuma inscrição encontrada"
+- [x] Erro na consulta: mensagem de erro exibida
+- [x] Cada row clicável (cursor pointer, evento de clique)
 
 **Verify**: Com inscrições no banco → tabela renderiza corretamente. Banco vazio → mensagem de vazio. Supabase off → mensagem de erro.
 

@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Auth.isAuthenticated()) {
             loginSection.classList.add('hidden');
             dashboardSection.classList.remove('hidden');
-            // T3: A inicialização e carregamento dos dados do painel será feita nas próximas tasks
-            console.log("Painel autenticado. Pronto para carregar dados (T3).");
+            // Inicializa a tabela de inscritos
+            console.log("Painel autenticado. Carregando dados...");
+            carregarInscritos();
         } else {
             dashboardSection.classList.add('hidden');
             loginSection.classList.remove('hidden');
@@ -67,6 +68,87 @@ document.addEventListener('DOMContentLoaded', () => {
                 loginError.classList.remove('hidden');
             }
         });
+    }
+
+    // -------------------------------------------------------------
+    // Lógica de Carregamento de Inscritos (T4)
+    // -------------------------------------------------------------
+    async function carregarInscritos() {
+        const container = document.getElementById('lista-inscritos');
+        const spanTotal = document.getElementById('total-inscritos');
+        
+        if (!container || !spanTotal) return;
+
+        container.innerHTML = `<div style="padding: var(--spacing-8); text-align: center; color: var(--color-text-muted);">Carregando dados...</div>`;
+
+        try {
+            const adminClient = getSupabaseAdmin();
+            if (!adminClient) throw new Error("Cliente Admin Supabase não configurado.");
+
+            const { data, error } = await adminClient
+                .from('inscricoes')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            spanTotal.innerText = data.length;
+
+            if (data.length === 0) {
+                container.innerHTML = `<div style="padding: var(--spacing-8); text-align: center; color: var(--color-text-muted);">Nenhuma inscrição encontrada até o momento.</div>`;
+                return;
+            }
+
+            // Utilitários de formatação
+            const formatDate = (isoString) => {
+                const date = new Date(isoString);
+                return date.toLocaleDateString('pt-BR');
+            };
+            const formatBool = (bool) => bool ? 'Sim' : 'Não';
+
+            // Montar Tabela
+            let tableHTML = `
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm);">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-border); background-color: var(--color-bg);">
+                            <th style="padding: var(--spacing-3);">Data</th>
+                            <th style="padding: var(--spacing-3);">Nome</th>
+                            <th style="padding: var(--spacing-3);">Cristão?</th>
+                            <th style="padding: var(--spacing-3);">Águas</th>
+                            <th style="padding: var(--spacing-3);">Espírito Santo</th>
+                            <th style="padding: var(--spacing-3);">Comunhão</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach(item => {
+                // Converte o objeto item para string JSON safely to pass to onclick
+                const itemJSON = encodeURIComponent(JSON.stringify(item));
+                
+                tableHTML += `
+                    <tr style="border-bottom: 1px solid var(--color-border); cursor: pointer;" class="table-row-hover" onclick="verDetalhes('${itemJSON}')">
+                        <td style="padding: var(--spacing-3); color: var(--color-text-muted);">${formatDate(item.created_at)}</td>
+                        <td style="padding: var(--spacing-3); font-weight: bold; color: var(--color-text);">${item.nome || '-'}</td>
+                        <td style="padding: var(--spacing-3);">${formatBool(item.cristao)}</td>
+                        <td style="padding: var(--spacing-3);">${formatBool(item.batizado_aguas)}</td>
+                        <td style="padding: var(--spacing-3);">${item.batizado_espirito || '-'}</td>
+                        <td style="padding: var(--spacing-3);">${formatBool(item.em_comunhao)}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = tableHTML;
+
+        } catch (err) {
+            console.error("Erro ao buscar inscrições:", err);
+            container.innerHTML = `<div style="padding: var(--spacing-8); text-align: center; color: var(--color-error);">❌ Erro ao carregar os dados. Verifique o console.</div>`;
+        }
     }
 
     // Expõe logout globalmente para o botão (que será criado na T3/T4)
