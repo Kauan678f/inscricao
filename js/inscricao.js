@@ -30,5 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // A validação final e envio (T10-T12) será implementada depois
+    // -------------------------------------------------------------
+    // Lógica do Checkbox de Aceite e Botão de Envio (T10)
+    // -------------------------------------------------------------
+    const checkboxAceite = document.getElementById('aceite_termos');
+    const btnSubmit = document.getElementById('btn-submit');
+
+    if (checkboxAceite && btnSubmit) {
+        checkboxAceite.addEventListener('change', (e) => {
+            // Habilita o botão apenas se o checkbox estiver marcado
+            btnSubmit.disabled = !e.target.checked;
+        });
+    }
+
+    // A validação final e envio (T11-T12) será implementada nas próximas tasks
 });

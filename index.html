@@ -147,6 +147,24 @@
                     <span class="error-message">Este campo é obrigatório.</span>
                 </div>
 
+                <!-- Checkbox de Aceite -->
+                <div class="form-group" style="margin-top: var(--spacing-6); padding-top: var(--spacing-4); border-top: 1px solid var(--color-border);">
+                    <label class="radio-label" for="aceite_termos" style="align-items: flex-start;">
+                        <input type="checkbox" id="aceite_termos" name="aceite_termos" class="radio-input" style="margin-top: 4px;" required>
+                        <span style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+                            Declaro que li e compreendi as informações apresentadas sobre o projeto, incluindo as ressalvas de que a inscrição não garante participação automática e de que esta iniciativa não se trata de uma vaga de emprego, curso ou serviço.
+                        </span>
+                    </label>
+                    <span class="error-message">Você precisa aceitar as condições para enviar sua inscrição.</span>
+                </div>
+
+                <!-- Botão Enviar -->
+                <div class="form-group" style="margin-bottom: 0; margin-top: var(--spacing-4);">
+                    <button type="submit" id="btn-submit" class="btn btn-primary" style="width: 100%; padding: var(--spacing-4); font-size: var(--font-size-lg);" disabled>
+                        Enviar Inscrição
+                    </button>
+                </div>
+
             </form>
         </section>
     </main>

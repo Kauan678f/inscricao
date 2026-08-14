@@ -275,11 +275,11 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Checkbox com texto "Li e compreendi as informações apresentadas sobre o projeto..."
-- [ ] Botão "Enviar inscrição" com atributo disabled por padrão
-- [ ] JavaScript: event listener na checkbox que habilita/desabilita o botão
-- [ ] Estilo visual claro diferenciando botão habilitado vs desabilitado
-- [ ] Botão com estilo de destaque (cor primária, tamanho adequado para toque)
+- [x] Checkbox com texto "Li e compreendi as informações apresentadas sobre o projeto..."
+- [x] Botão "Enviar inscrição" com atributo disabled por padrão
+- [x] JavaScript: event listener na checkbox que habilita/desabilita o botão
+- [x] Estilo visual claro diferenciando botão habilitado vs desabilitado
+- [x] Botão com estilo de destaque (cor primária, tamanho adequado para toque)
 
 **Verify**: Checkbox desmarcada → botão cinza/desabilitado. Checkbox marcada → botão ativo e clicável.
 
