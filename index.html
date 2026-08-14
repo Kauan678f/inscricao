@@ -113,12 +113,38 @@
                             <input type="radio" id="espirito-nao" name="batizado_espirito" value="Não" class="radio-input">
                             Não
                         </label>
-                        <label class="radio-label" for="espirito-prefiro">
-                            <input type="radio" id="espirito-prefiro" name="batizado_espirito" value="Prefiro não responder" class="radio-input">
-                            Prefiro não responder
+                    </div>
+                    <span class="error-message">Por favor, selecione uma opção.</span>
+                </div>
+
+                <!-- Pergunta 5 -->
+                <div class="form-group" id="group-comunhao">
+                    <span class="form-label">5. Você está em comunhão com alguma igreja local atualmente? *</span>
+                    <div class="radio-group">
+                        <label class="radio-label" for="comunhao-sim">
+                            <input type="radio" id="comunhao-sim" name="em_comunhao" value="Sim" class="radio-input" required>
+                            Sim
+                        </label>
+                        <label class="radio-label" for="comunhao-nao">
+                            <input type="radio" id="comunhao-nao" name="em_comunhao" value="Não" class="radio-input">
+                            Não
                         </label>
                     </div>
                     <span class="error-message">Por favor, selecione uma opção.</span>
+                </div>
+
+                <!-- Pergunta 6 (Condicional) -->
+                <div class="form-group hidden" id="group-tempo-comunhao">
+                    <label for="tempo_comunhao" class="form-label">6. Há quanto tempo você está em comunhão nessa igreja? *</label>
+                    <input type="text" id="tempo_comunhao" name="tempo_comunhao" class="form-input" placeholder="Ex: 2 anos">
+                    <span class="error-message">Este campo é obrigatório.</span>
+                </div>
+
+                <!-- Pergunta 7 -->
+                <div class="form-group" id="group-motivo">
+                    <label for="motivo" class="form-label">7. Por que você deseja participar deste projeto? *</label>
+                    <textarea id="motivo" name="motivo" class="form-input" placeholder="Compartilhe seus motivos conosco..." required></textarea>
+                    <span class="error-message">Este campo é obrigatório.</span>
                 </div>
 
             </form>

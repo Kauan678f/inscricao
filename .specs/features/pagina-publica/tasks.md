@@ -215,7 +215,7 @@ T10 → T11 → T12
 
 ### T8: Implementar perguntas 1 a 4 do formulário
 
-**What**: Adicionar os campos: É cristão (radio), Tempo cristão (text), Batizado águas (radio), Batizado espírito (radio com 3 opções)
+**What**: Adicionar os campos: É cristão (radio), Tempo cristão (text), Batizado águas (radio), Batizado espírito (radio com 2 opções)
 **Where**: `index.html`
 **Depends on**: T7
 **Requirement**: PUB-03
@@ -228,7 +228,7 @@ T10 → T11 → T12
 - [x] Pergunta 1: Radio group "Sim/Não" com name="cristao"
 - [x] Pergunta 2: Input text com name="tempo_cristao" e label
 - [x] Pergunta 3: Radio group "Sim/Não" com name="batizado_aguas"
-- [x] Pergunta 4: Radio group "Sim/Não/Prefiro não responder" com name="batizado_espirito"
+- [x] Pergunta 4: Radio group "Sim/Não" com name="batizado_espirito"
 - [x] Todos os campos com labels acessíveis (for/id)
 - [x] Estilos de radio buttons customizados
 
@@ -250,12 +250,12 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Pergunta 5: Radio group "Sim/Não" com name="em_comunhao"
-- [ ] Pergunta 6: Input text com name="tempo_comunhao", inicialmente oculto (display:none)
-- [ ] Pergunta 7: Textarea com name="motivo", rows suficientes para texto longo
-- [ ] JavaScript: event listener no radio de comunhão que mostra/oculta campo 6
-- [ ] Quando "Sim" selecionado → campo 6 aparece com animação suave
-- [ ] Quando "Não" selecionado → campo 6 desaparece e valor é limpo
+- [x] Pergunta 5: Radio group "Sim/Não" com name="em_comunhao"
+- [x] Pergunta 6: Input text com name="tempo_comunhao", inicialmente oculto (display:none)
+- [x] Pergunta 7: Textarea com name="motivo", rows suficientes para texto longo
+- [x] JavaScript: event listener no radio de comunhão que mostra/oculta campo 6
+- [x] Quando "Sim" selecionado → campo 6 aparece com animação suave
+- [x] Quando "Não" selecionado → campo 6 desaparece e valor é limpo
 
 **Verify**: Clicar "Sim" em comunhão → campo de tempo aparece. Clicar "Não" → campo desaparece.
 
