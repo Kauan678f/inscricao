@@ -63,11 +63,11 @@ T1 → T2 → T3
 - Skill: NONE
 
 **Done when**:
-- [ ] `ALTER TABLE inscricoes ENABLE ROW LEVEL SECURITY`
-- [ ] Policy "allow_anon_insert": permite INSERT para role `anon`
-- [ ] Policy "deny_anon_select": nega SELECT para role `anon`
-- [ ] Comentários explicando que SELECT será permitido apenas via service_role key
-- [ ] Script pode ser executado no Supabase SQL Editor
+- [x] `ALTER TABLE inscricoes ENABLE ROW LEVEL SECURITY`
+- [x] Policy "allow_anon_insert": permite INSERT para role `anon`
+- [x] Policy "deny_anon_select": nega SELECT para role `anon`
+- [x] Comentários explicando que SELECT será permitido apenas via service_role key
+- [x] Script pode ser executado no Supabase SQL Editor
 
 **Verify**: Após executar, tentar SELECT via API com anon key → retorna vazio. Tentar INSERT via formulário → funciona.
 
