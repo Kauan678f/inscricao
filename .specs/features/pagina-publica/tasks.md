@@ -104,11 +104,11 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Supabase JS Client importado via CDN (script tag no HTML ou import)
-- [ ] Constantes SUPABASE_URL e SUPABASE_ANON_KEY definidas (placeholder para preencher)
-- [ ] Cliente inicializado com `supabase.createClient()`
-- [ ] Funções exportadas: `getSupabaseClient()`, `getSupabaseAdmin()` (para service_role key)
-- [ ] Comentários indicando onde substituir as keys
+- [x] Supabase JS Client importado via CDN (script tag no HTML ou import)
+- [x] Constantes SUPABASE_URL e SUPABASE_ANON_KEY definidas (placeholder para preencher)
+- [x] Cliente inicializado com `supabase.createClient()`
+- [x] Funções exportadas: `getSupabaseClient()`, `getSupabaseAdmin()` (para service_role key)
+- [x] Comentários indicando onde substituir as keys
 
 **Verify**: Abrir console do navegador — cliente Supabase inicializado sem erros (mesmo com keys placeholder).
 
