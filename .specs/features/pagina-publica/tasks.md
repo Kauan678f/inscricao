@@ -80,11 +80,11 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] CSS custom properties definidas (--color-primary, --color-bg, --color-text, --font-family, --spacing-*, --radius-*)
-- [ ] Reset CSS aplicado (box-sizing, margin/padding zero, font smoothing)
-- [ ] Tipografia base configurada (Google Fonts importada, tamanhos responsivos)
-- [ ] Classes utilitárias para container, seções e espaçamentos
-- [ ] Media queries base definidas (480px, 768px, 1024px)
+- [x] CSS custom properties definidas (--color-primary, --color-bg, --color-text, --font-family, --spacing-*, --radius-*)
+- [x] Reset CSS aplicado (box-sizing, margin/padding zero, font smoothing)
+- [x] Tipografia base configurada (Google Fonts importada, tamanhos responsivos)
+- [x] Classes utilitárias para container, seções e espaçamentos
+- [x] Media queries base definidas (480px, 768px, 1024px)
 
 **Verify**: Abrir index.html com o CSS linkado — tipografia e cores base visíveis, sem erros no console.
 
