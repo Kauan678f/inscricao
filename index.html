@@ -60,6 +60,18 @@
         <!-- Formulário de Inscrição -->
         <section id="inscricao" class="section container">
             <h2 class="text-center">Formulário de Inscrição</h2>
+
+            <!-- Feedback Messages -->
+            <div id="feedback-success" class="alert-box hidden" style="background-color: var(--color-success-light); border-color: var(--color-success); margin-bottom: var(--spacing-6);">
+                <h3 style="color: #065f46; margin-bottom: var(--spacing-2);">✅ Inscrição enviada com sucesso!</h3>
+                <p style="color: #065f46;">Agradecemos pelo seu interesse. Suas informações foram registradas e entraremos em contato em breve.</p>
+            </div>
+
+            <div id="feedback-error" class="alert-box hidden" style="background-color: var(--color-error-light); border-color: var(--color-error); margin-bottom: var(--spacing-6);">
+                <h3 style="color: #991b1b; margin-bottom: var(--spacing-2);">❌ Ocorreu um erro</h3>
+                <p style="color: #991b1b;" id="error-message-text">Não foi possível enviar sua inscrição no momento. Verifique sua conexão e tente novamente.</p>
+            </div>
+
             <form id="form-inscricao" class="form-container" novalidate>
                 
                 <!-- Pergunta 1 -->

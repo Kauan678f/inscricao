@@ -324,12 +324,12 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Função `enviarInscricao()` que coleta dados do form e chama Supabase insert
-- [ ] Mapeamento correto: cristao→boolean, batizado_aguas→boolean, em_comunhao→boolean, batizado_espirito→text, textos→text
-- [ ] Loading state no botão durante envio (spinner ou texto "Enviando...")
-- [ ] Sucesso: exibe mensagem "Inscrição enviada com sucesso!" e oculta/desabilita formulário
-- [ ] Erro: exibe mensagem "Não foi possível enviar sua inscrição..." sem perder dados preenchidos
-- [ ] Prevenção de envio duplicado (desabilitar botão após clique)
+- [x] Função `enviarInscricao()` que coleta dados do form e chama Supabase insert
+- [x] Mapeamento correto: cristao→boolean, batizado_aguas→boolean, em_comunhao→boolean, batizado_espirito→text, textos→text
+- [x] Loading state no botão durante envio (spinner ou texto "Enviando...")
+- [x] Sucesso: exibe mensagem "Inscrição enviada com sucesso!" e oculta/desabilita formulário
+- [x] Erro: exibe mensagem "Não foi possível enviar sua inscrição..." sem perder dados preenchidos
+- [x] Prevenção de envio duplicado (desabilitar botão após clique)
 
 **Verify**: Preencher formulário completo → enviar → mensagem de sucesso aparece. Desconectar internet → enviar → mensagem de erro aparece.
 

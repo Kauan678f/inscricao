@@ -104,6 +104,74 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     }
 
+    // -------------------------------------------------------------
+    // Lógica de Envio para o Supabase (T12)
+    // -------------------------------------------------------------
+    async function enviarInscricao() {
+        const btnSubmit = document.getElementById('btn-submit');
+        const originalBtnText = btnSubmit.innerText;
+        const feedbackSuccess = document.getElementById('feedback-success');
+        const feedbackError = document.getElementById('feedback-error');
+        const errorText = document.getElementById('error-message-text');
+
+        // Função auxiliar para converter "Sim"/"Não" em booleano
+        const toBool = (val) => val === 'Sim';
+
+        // Reset feedbacks
+        feedbackSuccess.classList.add('hidden');
+        feedbackError.classList.add('hidden');
+
+        // Loading state (desabilita botão e muda texto)
+        btnSubmit.disabled = true;
+        btnSubmit.innerText = 'Enviando aguarde...';
+
+        try {
+            // Inicializa cliente
+            const supabaseClient = getSupabaseClient();
+            if (!supabaseClient) throw new Error("Cliente Supabase não configurado. Verifique js/supabase.js.");
+
+            // Coleta os valores do formulário
+            const isComunhao = toBool(document.querySelector('input[name="em_comunhao"]:checked').value);
+            const tempoComunhaoEl = document.getElementById('tempo_comunhao');
+
+            const payload = {
+                cristao: toBool(document.querySelector('input[name="cristao"]:checked').value),
+                tempo_cristao: document.getElementById('tempo_cristao').value.trim(),
+                batizado_aguas: toBool(document.querySelector('input[name="batizado_aguas"]:checked').value),
+                batizado_espirito: document.querySelector('input[name="batizado_espirito"]:checked').value,
+                em_comunhao: isComunhao,
+                tempo_comunhao: isComunhao && tempoComunhaoEl ? tempoComunhaoEl.value.trim() : null,
+                motivo: document.getElementById('motivo').value.trim()
+            };
+
+            // Envia pro Supabase
+            const { data, error } = await supabaseClient
+                .from('inscricoes')
+                .insert([payload]);
+
+            if (error) {
+                console.error("Erro Supabase:", error);
+                throw new Error("Erro de comunicação com o banco de dados.");
+            }
+
+            // Sucesso: Oculta o formulário e mostra a mensagem de sucesso
+            form.style.display = 'none';
+            feedbackSuccess.classList.remove('hidden');
+            
+            // Rola a tela suavemente para a mensagem de sucesso
+            feedbackSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        } catch (err) {
+            console.error("Erro na submissão:", err);
+            errorText.innerText = err.message || "Não foi possível enviar sua inscrição no momento. Por favor, tente novamente.";
+            feedbackError.classList.remove('hidden');
+            
+            // Restaura o botão para tentar novamente
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = originalBtnText;
+        }
+    }
+
     // Interceptar o submit do form
     const form = document.getElementById('form-inscricao');
     if (form) {
@@ -111,8 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); // Impede recarregamento da página
             
             if (validarFormulario()) {
-                console.log('Formulário válido! Pronto para enviar (T12).');
-                // T12: A conexão com Supabase e envio final acontecerá aqui
+                enviarInscricao();
             }
         });
     }
