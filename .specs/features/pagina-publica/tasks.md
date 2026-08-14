@@ -128,11 +128,11 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Tag `<header>` com classe específica
-- [ ] Nome do projeto em `<h1>`
-- [ ] Elemento `<img>` para logo com fallback (hidden se não houver logo)
-- [ ] Parágrafo de chamada explicando o objetivo da inscrição
-- [ ] Estilizado com gradiente ou cor de destaque, responsivo
+- [x] Tag `<header>` com classe específica
+- [x] Nome do projeto em `<h1>`
+- [x] Elemento `<img>` para logo com fallback (hidden se não houver logo)
+- [x] Parágrafo de chamada explicando o objetivo da inscrição
+- [x] Estilizado com gradiente ou cor de destaque, responsivo
 
 **Verify**: Abrir index.html — cabeçalho visível com texto legível em mobile (320px) e desktop (1440px).
 
