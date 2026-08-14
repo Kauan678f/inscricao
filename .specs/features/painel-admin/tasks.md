@@ -199,11 +199,11 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Em telas < 768px: tabela de listagem com scroll horizontal ou transformada em cards
-- [ ] Login centralizado e usável em telas pequenas
-- [ ] Detalhe da inscrição com layout single-column em mobile
-- [ ] Botão "Sair" acessível em mobile
-- [ ] Tamanhos de toque adequados (≥ 44px) em todos os botões
+- [x] Em telas < 768px: tabela de listagem com scroll horizontal ou transformada em cards
+- [x] Login centralizado e usável em telas pequenas
+- [x] Detalhe da inscrição com layout single-column em mobile
+- [x] Botão "Sair" acessível em mobile
+- [x] Tamanhos de toque adequados (≥ 44px) em todos os botões
 
 **Verify**: Simular iPhone SE e iPad no DevTools → todas as telas do admin (login, listagem, detalhe) funcionam.
 

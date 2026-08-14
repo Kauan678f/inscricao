@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button onclick="window.fecharDetalhes()" class="btn" style="background: var(--color-error); color: white; border: none; padding: var(--spacing-2) var(--spacing-4);">X Fechar</button>
             </div>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); margin-bottom: var(--spacing-6);">
+            <div class="details-grid" style="margin-bottom: var(--spacing-6);">
                 <div>
                     <strong style="color: var(--color-text-muted);">Data da Inscrição:</strong>
                     <div>${formatDate(inscricao.created_at)}</div>

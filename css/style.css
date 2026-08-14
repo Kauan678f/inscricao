@@ -387,3 +387,20 @@ textarea.form-input {
         padding-bottom: var(--spacing-16);
     }
 }
+
+/* --- Admin: Responsividade --- */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn {
+        min-height: 44px; /* Acessibilidade: touch target size */
+    }
+}
