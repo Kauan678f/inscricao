@@ -87,11 +87,11 @@ T1 → T2 → T3
 - Skill: NONE
 
 **Done when**:
-- [ ] Instruções para criar projeto no Supabase (se não existir)
-- [ ] Instruções para executar schema.sql no SQL Editor
-- [ ] Instruções para executar rls.sql no SQL Editor
-- [ ] Instruções para obter URL, anon key e service_role key
-- [ ] Instruções para colar as keys nos arquivos JS do projeto
+- [x] Instruções para criar projeto no Supabase (se não existir)
+- [x] Instruções para executar schema.sql no SQL Editor
+- [x] Instruções para executar rls.sql no SQL Editor
+- [x] Instruções para obter URL, anon key e service_role key
+- [x] Instruções para colar as keys nos arquivos JS do projeto
 
 **Verify**: Seguir o guia do zero resulta em Supabase configurado corretamente.
 
