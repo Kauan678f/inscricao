@@ -299,12 +299,12 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Função `validarFormulario()` que verifica cada campo obrigatório
-- [ ] Campos obrigatórios: cristao, tempo_cristao, batizado_aguas, batizado_espirito, em_comunhao, motivo
-- [ ] Se em_comunhao === "Sim", tempo_comunhao também é obrigatório
-- [ ] Campos inválidos recebem classe CSS de erro (borda vermelha) + mensagem
-- [ ] Scroll automático para o primeiro campo com erro
-- [ ] Retorna true/false
+- [x] Função `validarFormulario()` que verifica cada campo obrigatório
+- [x] Campos obrigatórios: cristao, tempo_cristao, batizado_aguas, batizado_espirito, em_comunhao, motivo
+- [x] Se em_comunhao === "Sim", tempo_comunhao também é obrigatório
+- [x] Campos inválidos recebem classe CSS de erro (borda vermelha) + mensagem
+- [x] Scroll automático para o primeiro campo com erro
+- [x] Retorna true/false
 
 **Verify**: Submeter formulário vazio → todos os campos obrigatórios destacados em vermelho com mensagens.
 
