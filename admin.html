@@ -8,6 +8,39 @@
 </head>
 <body>
     
+    <!-- Tela de Login -->
+    <main id="login-section" class="login-wrapper">
+        <div class="form-container login-box">
+            <div class="text-center" style="margin-bottom: var(--spacing-6);">
+                <h1 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-2); color: var(--color-primary);">Painel Administrativo</h1>
+                <p class="text-muted">Faça login para visualizar os inscritos.</p>
+            </div>
+            
+            <form id="form-login">
+                <div class="form-group">
+                    <label for="username" class="form-label">Usuário</label>
+                    <input type="text" id="username" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" id="password" class="form-input" required>
+                </div>
+                
+                <div id="login-error" class="error-message text-center" style="margin-bottom: var(--spacing-4);">
+                    Credenciais inválidas.
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Painel Principal (Oculto até login) -->
+    <main id="dashboard-section" class="hidden">
+        <!-- O painel de dashboard será construído aqui -->
+    </main>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>

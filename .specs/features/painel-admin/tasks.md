@@ -47,12 +47,12 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Formulário de login centralizado na tela com campos "Usuário" e "Senha"
-- [ ] Input de senha com type="password"
-- [ ] Botão "Entrar"
-- [ ] Espaço para mensagem de erro (hidden por padrão)
-- [ ] Estilizado com o design system do projeto (mesmas cores, fontes)
-- [ ] Layout responsivo (funciona em mobile e desktop)
+- [x] Formulário de login centralizado na tela com campos "Usuário" e "Senha"
+- [x] Input de senha com type="password"
+- [x] Botão "Entrar"
+- [x] Espaço para mensagem de erro (hidden por padrão)
+- [x] Estilizado com o design system do projeto (mesmas cores, fontes)
+- [x] Layout responsivo (funciona em mobile e desktop)
 
 **Verify**: Abrir admin.html → tela de login renderiza centralizada, campos funcionais.
 
@@ -72,11 +72,11 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Função `handleLogin()` que compara usuário/senha com credenciais mockadas
-- [ ] Credenciais corretas: salvar flag em sessionStorage e mostrar painel (ocultar login)
-- [ ] Credenciais incorretas: exibir mensagem "Usuário ou senha incorretos"
-- [ ] Ao carregar página: verificar sessionStorage — se logado, mostrar painel direto
-- [ ] Estrutura modular que permita substituição futura por Supabase Auth (função `isAuthenticated()`, `login()`, `logout()` separadas)
+- [x] Função `handleLogin()` que compara usuário/senha com credenciais mockadas
+- [x] Credenciais corretas: salvar flag em sessionStorage e mostrar painel (ocultar login)
+- [x] Credenciais incorretas: exibir mensagem "Usuário ou senha incorretos"
+- [x] Ao carregar página: verificar sessionStorage — se logado, mostrar painel direto
+- [x] Estrutura modular que permita substituição futura por Supabase Auth (função `isAuthenticated()`, `login()`, `logout()` separadas)
 
 **Verify**: Inserir "admin"/"123456" → painel aparece. Inserir "wrong"/"wrong" → erro aparece. Recarregar → sessão mantida.
 

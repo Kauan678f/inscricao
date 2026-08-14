@@ -337,6 +337,22 @@ textarea.form-input {
     display: block;
 }
 
+/* --- Admin Login --- */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4);
+    background-color: var(--color-bg);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 0;
+}
+
 /* Media Queries (Mobile First) */
 @media (min-width: 480px) {
     .container {
