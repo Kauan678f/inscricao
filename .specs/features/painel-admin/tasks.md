@@ -96,12 +96,12 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Header do painel com título "Painel Administrativo" e botão "Sair"
-- [ ] Card/badge mostrando "Total de inscritos: X"
-- [ ] Container para tabela de listagem (id="lista-inscritos")
-- [ ] Container para detalhes de inscrição (id="detalhe-inscricao", hidden por padrão)
-- [ ] Layout com design system do projeto
-- [ ] Seção de login e seção de painel são mutuamente exclusivas (uma oculta a outra)
+- [x] Header do painel com título "Painel Administrativo" e botão "Sair"
+- [x] Card/badge mostrando "Total de inscritos: X"
+- [x] Container para tabela de listagem (id="lista-inscritos")
+- [x] Container para detalhes de inscrição (id="detalhe-inscricao", hidden por padrão)
+- [x] Layout com design system do projeto
+- [x] Seção de login e seção de painel são mutuamente exclusivas (uma oculta a outra)
 
 **Verify**: Após login, painel aparece com todas as áreas estruturadas (vazias, sem dados ainda).
 
