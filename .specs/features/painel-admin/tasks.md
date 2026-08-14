@@ -176,10 +176,10 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Função `handleLogout()` que limpa sessionStorage
-- [ ] Após logout, seção do painel é ocultada e tela de login é exibida
-- [ ] Botão "Sair" no header do painel conectado ao handleLogout
-- [ ] Após logout, recarregar página exige novo login
+- [x] Função `handleLogout()` que limpa sessionStorage
+- [x] Após logout, seção do painel é ocultada e tela de login é exibida
+- [x] Botão "Sair" no header do painel conectado ao handleLogout
+- [x] Após logout, recarregar página exige novo login
 
 **Verify**: Clicar "Sair" → tela de login aparece. Recarregar → pede login novamente.
 
