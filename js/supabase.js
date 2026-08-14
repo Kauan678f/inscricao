@@ -1,7 +1,7 @@
 // Arquivo de configuração do cliente Supabase
 
 // TODO: Substitua pelos valores do seu projeto Supabase (encontrados em Project Settings -> API)
-const SUPABASE_URL = 'COLOQUE_SUA_URL_AQUI'; // Lembre-se de colocar sua URL!
+const SUPABASE_URL = 'https://mzyvdcuuqjrxgjbhwczf.supabase.co'; // Lembre-se de colocar sua URL!
 const SUPABASE_ANON_KEY = 'sb_publishable_WJLyKpWN9g7N5-UT2NDjww__E3GI1QC';
 
 // A service_role key só deve ser usada no painel administrativo.
