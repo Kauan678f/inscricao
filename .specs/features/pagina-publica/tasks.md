@@ -57,10 +57,10 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Arquivo `index.html` criado com boilerplate HTML5 (meta viewport, charset, links para CSS/JS)
-- [ ] Arquivo `admin.html` criado com boilerplate HTML5
-- [ ] Diretórios `css/`, `js/`, `assets/` criados
-- [ ] Arquivos `css/style.css`, `js/supabase.js`, `js/inscricao.js`, `js/admin.js` criados (vazios ou com comentário)
+- [x] Arquivo `index.html` criado com boilerplate HTML5 (meta viewport, charset, links para CSS/JS)
+- [x] Arquivo `admin.html` criado com boilerplate HTML5
+- [x] Diretórios `css/`, `js/`, `assets/` criados
+- [x] Arquivos `css/style.css`, `js/supabase.js`, `js/inscricao.js`, `js/admin.js` criados (vazios ou com comentário)
 
 **Verify**: Abrir index.html no navegador — deve renderizar página em branco sem erros no console.
 
