@@ -152,11 +152,11 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Tag `<section>` com id="sobre" e classe específica
-- [ ] Subtítulos para cada tópico (O que é, Objetivo, Quem pode participar, Como funciona)
-- [ ] Texto placeholder claro e direto (marcado como placeholder para substituição)
-- [ ] Layout em cards ou blocos visuais para cada tópico
-- [ ] Responsivo em todas as breakpoints
+- [x] Tag `<section>` com id="sobre" e classe específica
+- [x] Subtítulos para cada tópico (O que é, Objetivo, Quem pode participar, Como funciona)
+- [x] Texto placeholder claro e direto (marcado como placeholder para substituição)
+- [x] Layout em cards ou blocos visuais para cada tópico
+- [x] Responsivo em todas as breakpoints
 
 **Verify**: Scroll da página mostra seção de apresentação completa antes das ressalvas.
 
