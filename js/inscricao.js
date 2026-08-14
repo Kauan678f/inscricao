@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // 2. Verificações obrigatórias
+        validarTexto('nome', 'group-nome');
         validarRadio('cristao', 'group-cristao');
         validarTexto('tempo_cristao', 'group-tempo-cristao');
         validarRadio('batizado_aguas', 'group-batizado-aguas');
@@ -135,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tempoComunhaoEl = document.getElementById('tempo_comunhao');
 
             const payload = {
+                nome: document.getElementById('nome').value.trim(),
                 cristao: toBool(document.querySelector('input[name="cristao"]:checked').value),
                 tempo_cristao: document.getElementById('tempo_cristao').value.trim(),
                 batizado_aguas: toBool(document.querySelector('input[name="batizado_aguas"]:checked').value),

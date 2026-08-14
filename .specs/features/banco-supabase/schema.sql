@@ -2,6 +2,7 @@
 CREATE TABLE inscricoes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     created_at TIMESTAMPTZ DEFAULT now(),
+    nome TEXT NOT NULL,
     cristao BOOLEAN NOT NULL,
     tempo_cristao TEXT NOT NULL,
     batizado_aguas BOOLEAN NOT NULL,
