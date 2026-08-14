@@ -149,12 +149,14 @@ T5 → T6 → T7
 - Skill: NONE
 
 **Done when**:
-- [ ] Função `exibirDetalhe(inscricao)` que recebe o objeto e renderiza todas as respostas
-- [ ] Layout de detalhe com: Data, É cristão?, Há quanto tempo?, Batizado águas?, Batizado espírito?, Em comunhão?, Há quanto tempo em comunhão?, Por que deseja participar? (texto completo)
-- [ ] Campo tempo_comunhao nulo exibe "N/A" ou "Não se aplica"
-- [ ] Botão "Voltar à listagem" que oculta detalhes e mostra tabela
-- [ ] Ao clicar em uma row na listagem → oculta tabela, mostra detalhes
-- [ ] Transição suave entre listagem e detalhe
+- [x] Função `verDetalhes(inscricao)` vinculada ao clique da linha da tabela
+- [x] Renderizar no container `detalhe-inscricao` todas as respostas
+- [x] Botão "Fechar" ou "Voltar" para ocultar os detalhes
+- [x] Animação ou scroll suave para a área de detalhes
+- [x] Campo tempo_comunhao nulo exibe "N/A" ou "Não se aplica"
+- [x] Botão "Voltar à listagem" que oculta detalhes e mostra tabela
+- [x] Ao clicar em uma row na listagem → oculta tabela, mostra detalhes
+- [x] Transição suave entre listagem e detalhe
 
 **Verify**: Clicar em inscrição na tabela → todas as respostas visíveis. Clicar "Voltar" → volta à tabela.
 

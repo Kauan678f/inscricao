@@ -151,6 +151,70 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // -------------------------------------------------------------
+    // Visualização de Detalhes (T5)
+    // -------------------------------------------------------------
+    window.verDetalhes = function(inscricaoJSON) {
+        const inscricao = JSON.parse(decodeURIComponent(inscricaoJSON));
+        const container = document.getElementById('detalhe-inscricao');
+        
+        if (!container) return;
+        
+        // Utilitários
+        const formatDate = (isoString) => new Date(isoString).toLocaleString('pt-BR');
+        const formatBool = (bool) => bool ? 'Sim' : 'Não';
+        
+        const html = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-4);">
+                <h3 style="margin: 0; color: var(--color-primary-dark);">Ficha: ${inscricao.nome || 'Não informado'}</h3>
+                <button onclick="window.fecharDetalhes()" class="btn" style="background: var(--color-error); color: white; border: none; padding: var(--spacing-2) var(--spacing-4);">X Fechar</button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-4); margin-bottom: var(--spacing-6);">
+                <div>
+                    <strong style="color: var(--color-text-muted);">Data da Inscrição:</strong>
+                    <div>${formatDate(inscricao.created_at)}</div>
+                </div>
+                <div>
+                    <strong style="color: var(--color-text-muted);">ID no Banco:</strong>
+                    <div style="font-size: var(--font-size-sm); color: var(--color-text-muted);">${inscricao.id}</div>
+                </div>
+                <div>
+                    <strong style="color: var(--color-text-muted);">É Cristão?</strong>
+                    <div>${formatBool(inscricao.cristao)} (Há ${inscricao.tempo_cristao || '-'})</div>
+                </div>
+                <div>
+                    <strong style="color: var(--color-text-muted);">Comunhão em Igreja?</strong>
+                    <div>${formatBool(inscricao.em_comunhao)} (Há ${inscricao.tempo_comunhao || '-'})</div>
+                </div>
+                <div>
+                    <strong style="color: var(--color-text-muted);">Batizado nas Águas?</strong>
+                    <div>${formatBool(inscricao.batizado_aguas)}</div>
+                </div>
+                <div>
+                    <strong style="color: var(--color-text-muted);">Batizado no Espírito Santo?</strong>
+                    <div>${inscricao.batizado_espirito || '-'}</div>
+                </div>
+            </div>
+            
+            <div style="background-color: var(--color-bg); padding: var(--spacing-4); border-radius: var(--border-radius); border: 1px solid var(--color-border);">
+                <strong style="color: var(--color-primary); display: block; margin-bottom: var(--spacing-2);">Motivo para participar:</strong>
+                <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${inscricao.motivo || 'Nenhum motivo fornecido.'}</p>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+        container.classList.remove('hidden');
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    window.fecharDetalhes = function() {
+        const container = document.getElementById('detalhe-inscricao');
+        if (container) {
+            container.classList.add('hidden');
+        }
+    };
+
     // Expõe logout globalmente para o botão (que será criado na T3/T4)
     window.logout = Auth.logout;
 
