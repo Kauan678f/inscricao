@@ -212,6 +212,48 @@ p { margin-bottom: var(--spacing-4); }
     font-size: var(--font-size-lg);
 }
 
+/* --- Alert Box (Ressalvas) --- */
+.alert-box {
+    background-color: var(--color-warning-light);
+    border: 1px solid #fcd34d; /* slightly darker warning border */
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6) var(--spacing-6) var(--spacing-6) var(--spacing-6);
+    box-shadow: var(--shadow-md);
+}
+
+.alert-title {
+    color: #92400e; /* Dark amber */
+    margin-bottom: var(--spacing-4);
+    font-size: var(--font-size-xl);
+}
+
+.alert-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.alert-list li {
+    position: relative;
+    padding-left: var(--spacing-6);
+    margin-bottom: var(--spacing-3);
+    color: #92400e;
+    line-height: 1.6;
+}
+
+.alert-list li::before {
+    content: "•";
+    color: var(--color-warning);
+    font-weight: bold;
+    font-size: var(--font-size-2xl);
+    position: absolute;
+    left: var(--spacing-1);
+    top: -5px;
+}
+
+.alert-list li:last-child {
+    margin-bottom: 0;
+}
+
 /* Media Queries (Mobile First) */
 @media (min-width: 480px) {
     .container {

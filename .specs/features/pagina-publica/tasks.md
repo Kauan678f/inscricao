@@ -176,12 +176,12 @@ T10 → T11 → T12
 - Skill: NONE
 
 **Done when**:
-- [ ] Tag `<section>` com id="ressalvas" e classe de destaque visual
-- [ ] Título "⚠️ Antes de se inscrever, leia atentamente" em `<h2>`
-- [ ] Lista de ressalvas com ícones/bullets visuais
-- [ ] Background diferenciado (cor de alerta suave) com borda ou box-shadow
-- [ ] Posicionada entre a apresentação e o formulário
-- [ ] Impossível de ser ignorada no fluxo de scroll
+- [x] Tag `<section>` com id="ressalvas" e classe de destaque visual
+- [x] Título "⚠️ Antes de se inscrever, leia atentamente" em `<h2>`
+- [x] Lista de ressalvas com ícones/bullets visuais
+- [x] Background diferenciado (cor de alerta suave) com borda ou box-shadow
+- [x] Posicionada entre a apresentação e o formulário
+- [x] Impossível de ser ignorada no fluxo de scroll
 
 **Verify**: Scroll natural da página — ressalvas aparecem destacadas antes do formulário, impossíveis de pular.
 
