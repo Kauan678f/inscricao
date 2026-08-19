@@ -1,103 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // -------------------------------------------------------------
-    // Lógica Condicional do Formulário (Pergunta 5 -> Pergunta 6)
-    // -------------------------------------------------------------
-    const comunhaoRadios = document.querySelectorAll('input[name="em_comunhao"]');
-    const groupTempoComunhao = document.getElementById('group-tempo-comunhao');
-    const inputTempoComunhao = document.getElementById('tempo_comunhao');
-
-    if (comunhaoRadios.length > 0 && groupTempoComunhao && inputTempoComunhao) {
-        comunhaoRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.value === 'Sim') {
-                    // Mostrar campo 6 com animação via class
-                    groupTempoComunhao.classList.remove('hidden');
-                    // Torna o campo obrigatório
-                    inputTempoComunhao.setAttribute('required', 'true');
-                } else {
-                    // Ocultar campo 6
-                    groupTempoComunhao.classList.add('hidden');
-                    // Remove obrigatoriedade
-                    inputTempoComunhao.removeAttribute('required');
-                    // Limpa o valor para não enviar dados residuais caso o usuário mude de ideia
-                    inputTempoComunhao.value = '';
-                    
-                    // Limpa também a classe de erro caso existisse
-                    inputTempoComunhao.classList.remove('is-invalid');
-                    groupTempoComunhao.classList.remove('has-error');
-                }
-            });
-        });
-    }
-
-    // -------------------------------------------------------------
-    // Lógica do Checkbox de Aceite e Botão de Envio (T10)
-    // -------------------------------------------------------------
     const checkboxAceite = document.getElementById('aceite_termos');
     const btnSubmit = document.getElementById('btn-submit');
 
+    // Habilita o botão ao aceitar os termos
     if (checkboxAceite && btnSubmit) {
         checkboxAceite.addEventListener('change', (e) => {
-            // Habilita o botão apenas se o checkbox estiver marcado
             btnSubmit.disabled = !e.target.checked;
         });
     }
 
-    // -------------------------------------------------------------
-    // Lógica de Validação do Formulário (T11)
-    // -------------------------------------------------------------
+    // Função de validação
     function validarFormulario() {
         let isValid = true;
         let primeiroCampoComErro = null;
 
-        // 1. Limpa erros anteriores
-        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        // Limpa os erros anteriores
         document.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
 
-        // Função auxiliar para marcar erro num grupo
-        const marcarErro = (group, inputElement = null) => {
+        const marcarErro = (groupId) => {
             isValid = false;
+            const group = document.getElementById(groupId);
             if (group) group.classList.add('has-error');
-            if (inputElement) inputElement.classList.add('is-invalid');
             if (!primeiroCampoComErro) primeiroCampoComErro = group;
         };
 
-        // Função auxiliar para validação de Radio buttons
-        const validarRadio = (name, groupId) => {
-            const radios = document.querySelectorAll(`input[name="${name}"]`);
-            const checked = Array.from(radios).find(r => r.checked);
-            if (!checked) {
-                marcarErro(document.getElementById(groupId));
-                return null;
-            }
-            return checked.value;
-        };
-
-        // Função auxiliar para validação de Textos e Textareas
         const validarTexto = (id, groupId) => {
             const input = document.getElementById(id);
             if (!input || input.value.trim() === '') {
-                marcarErro(document.getElementById(groupId), input);
+                marcarErro(groupId);
                 return null;
             }
             return input.value.trim();
         };
 
-        // 2. Verificações obrigatórias
-        validarTexto('nome', 'group-nome');
-        validarRadio('cristao', 'group-cristao');
-        validarTexto('tempo_cristao', 'group-tempo-cristao');
-        validarRadio('batizado_aguas', 'group-batizado-aguas');
-        validarRadio('batizado_espirito', 'group-batizado-espirito');
-        
-        const comunhao = validarRadio('em_comunhao', 'group-comunhao');
-        if (comunhao === 'Sim') {
-            validarTexto('tempo_comunhao', 'group-tempo-comunhao');
-        }
+        const validarRadio = (name, groupId) => {
+            const radios = document.querySelectorAll(`input[name="${name}"]`);
+            const checked = Array.from(radios).find(r => r.checked);
+            if (!checked) {
+                marcarErro(groupId);
+                return null;
+            }
+            return checked.value;
+        };
 
+        // Validação dos campos
+        validarTexto('nome', 'group-nome');
+        validarTexto('data_batismo_aguas', 'group-data-batismo');
+        validarRadio('batismo_espirito', 'group-batizado-espirito');
+        validarRadio('cre_dons', 'group-cre-dons');
+        validarRadio('cre_volta_cristo', 'group-cre-volta');
+        validarRadio('ja_participou_missoes', 'group-ja-missoes');
+        validarRadio('ja_acampou', 'group-ja-acampou');
+        validarRadio('disponivel_missoes', 'group-disponivel-missoes');
+        validarRadio('ciente_rede_social', 'group-ciente-rede');
+        validarRadio('resolvido_orientacoes', 'group-resolvido-orientacoes');
+        validarRadio('disponivel_orar_jejuar', 'group-disponivel-orar');
         validarTexto('motivo', 'group-motivo');
 
-        // 3. Scroll para o primeiro erro se houver
         if (!isValid && primeiroCampoComErro) {
             primeiroCampoComErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -105,9 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return isValid;
     }
 
-    // -------------------------------------------------------------
-    // Lógica de Envio para o Supabase (T12)
-    // -------------------------------------------------------------
+    // Função de Envio
     async function enviarInscricao() {
         const btnSubmit = document.getElementById('btn-submit');
         const originalBtnText = btnSubmit.innerText;
@@ -115,52 +72,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const feedbackError = document.getElementById('feedback-error');
         const errorText = document.getElementById('error-message-text');
 
-        // Função auxiliar para converter "Sim"/"Não" em booleano
-        const toBool = (val) => val === 'Sim';
-
-        // Reset feedbacks
         feedbackSuccess.classList.add('hidden');
         feedbackError.classList.add('hidden');
 
-        // Loading state (desabilita botão e muda texto)
         btnSubmit.disabled = true;
         btnSubmit.innerText = 'Enviando aguarde...';
 
         try {
-            // Inicializa cliente
-            const supabaseClient = getSupabaseClient();
-            if (!supabaseClient) throw new Error("Cliente Supabase não configurado. Verifique js/supabase.js.");
-
-            // Coleta os valores do formulário
-            const isComunhao = toBool(document.querySelector('input[name="em_comunhao"]:checked').value);
-            const tempoComunhaoEl = document.getElementById('tempo_comunhao');
-
+            // Se você quiser integrar com o Supabase depois, o payload é este
             const payload = {
                 nome: document.getElementById('nome').value.trim(),
-                cristao: toBool(document.querySelector('input[name="cristao"]:checked').value),
-                tempo_cristao: document.getElementById('tempo_cristao').value.trim(),
-                batizado_aguas: toBool(document.querySelector('input[name="batizado_aguas"]:checked').value),
-                batizado_espirito: document.querySelector('input[name="batizado_espirito"]:checked').value,
-                em_comunhao: isComunhao,
-                tempo_comunhao: isComunhao && tempoComunhaoEl ? tempoComunhaoEl.value.trim() : null,
+                data_batismo_aguas: document.getElementById('data_batismo_aguas').value,
+                batismo_espirito: document.querySelector('input[name="batismo_espirito"]:checked').value,
+                cre_dons: document.querySelector('input[name="cre_dons"]:checked').value,
+                cre_volta_cristo: document.querySelector('input[name="cre_volta_cristo"]:checked').value,
+                ja_participou_missoes: document.querySelector('input[name="ja_participou_missoes"]:checked').value,
+                ja_acampou: document.querySelector('input[name="ja_acampou"]:checked').value,
+                disponivel_missoes: document.querySelector('input[name="disponivel_missoes"]:checked').value,
+                ciente_rede_social: document.querySelector('input[name="ciente_rede_social"]:checked').value,
+                resolvido_orientacoes: document.querySelector('input[name="resolvido_orientacoes"]:checked').value,
+                disponivel_orar_jejuar: document.querySelector('input[name="disponivel_orar_jejuar"]:checked').value,
                 motivo: document.getElementById('motivo').value.trim()
             };
 
-            // Envia pro Supabase
-            const { data, error } = await supabaseClient
-                .from('inscricoes')
-                .insert([payload]);
-
-            if (error) {
-                console.error("Erro Supabase:", error);
-                throw new Error("Erro de comunicação com o banco de dados.");
+            // Simulação de envio por mockado (o usuário pediu pra deixar mockado dboa por agora ou Supabase)
+            // Descomente abaixo se o Supabase estiver configurado
+            
+            const supabaseClient = window.getSupabaseClient ? window.getSupabaseClient() : null;
+            if (supabaseClient) {
+                const { error } = await supabaseClient.from('inscricoes').insert([payload]);
+                if (error) throw new Error("Erro de comunicação com o banco de dados.");
+            } else {
+                // Mock delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                console.log("Mock Payload:", payload);
             }
+            
 
-            // Sucesso: Oculta o formulário e mostra a mensagem de sucesso
             form.style.display = 'none';
             feedbackSuccess.classList.remove('hidden');
-            
-            // Rola a tela suavemente para a mensagem de sucesso
             feedbackSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
         } catch (err) {
@@ -168,18 +118,15 @@ document.addEventListener('DOMContentLoaded', () => {
             errorText.innerText = err.message || "Não foi possível enviar sua inscrição no momento. Por favor, tente novamente.";
             feedbackError.classList.remove('hidden');
             
-            // Restaura o botão para tentar novamente
             btnSubmit.disabled = false;
             btnSubmit.innerText = originalBtnText;
         }
     }
 
-    // Interceptar o submit do form
     const form = document.getElementById('form-inscricao');
     if (form) {
         form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Impede recarregamento da página
-            
+            e.preventDefault();
             if (validarFormulario()) {
                 enviarInscricao();
             }
