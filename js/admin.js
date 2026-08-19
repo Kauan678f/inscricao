@@ -12,16 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginError) loginError.classList.add('hidden');
     
     const Auth = {
-        isAuthenticated() { return sessionStorage.getItem('admin_logged_in') === 'true'; },
+        isAuthenticated() { return localStorage.getItem('admin_logged_in') === 'true'; },
         login(username, password) {
             if (username === 'admin' && password === '123456') {
-                sessionStorage.setItem('admin_logged_in', 'true');
+                localStorage.setItem('admin_logged_in', 'true');
                 return true;
             }
             return false;
         },
         logout() {
-            sessionStorage.removeItem('admin_logged_in');
+            localStorage.removeItem('admin_logged_in');
             renderizarTela();
         }
     };
