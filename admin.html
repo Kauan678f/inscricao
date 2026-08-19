@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo - Projeto Cristão</title>
+    <title>Painel Administrativo - Acampe Missionário</title>
+    <link rel="icon" href="assets/image.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="admin-body">
     
     <!-- Tela de Login -->
-    <main id="login-section" class="login-wrapper">
-        <div class="form-container login-box">
+    <main id="login-section" class="admin-login-wrapper">
+        <div class="form-container login-box relative z-10">
             <div class="text-center" style="margin-bottom: var(--spacing-6);">
-                <h1 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-2); color: var(--color-primary);">Painel Administrativo</h1>
-                <p class="text-muted">Faça login para visualizar os inscritos.</p>
+                <img src="assets/image%20copy.png" alt="Logo" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 0 auto 1rem auto; display: block;">
+                <h1 style="font-size: var(--font-size-2xl); font-weight: 700; color: var(--color-primary); margin-bottom: 0.2rem;">Área Restrita</h1>
+                <p class="text-muted" style="margin-top: 0;">Faça login para gerenciar as inscrições.</p>
             </div>
             
             <form id="form-login">
@@ -27,51 +30,81 @@
                     <input type="password" id="password" class="form-input" required>
                 </div>
                 
-                <div id="login-error" class="error-message text-center" style="margin-bottom: var(--spacing-4);">
+                <div id="login-error" class="error-message text-center hidden" style="margin-bottom: var(--spacing-4);">
                     Credenciais inválidas.
                 </div>
                 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Acessar Painel</button>
             </form>
         </div>
     </main>
 
     <!-- Painel Principal (Oculto até login) -->
-    <main id="dashboard-section" class="hidden" style="min-height: 100vh; background-color: var(--color-bg);">
+    <main id="dashboard-section" class="hidden dashboard-wrapper">
         
         <!-- Header do Admin -->
-        <header style="background-color: white; border-bottom: 1px solid var(--color-border); padding: var(--spacing-4) 0;">
-            <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-                <h1 style="font-size: var(--font-size-xl); color: var(--color-primary); margin: 0;">Painel de Inscrições</h1>
-                <button onclick="window.logout()" class="btn" style="padding: var(--spacing-2) var(--spacing-4); border: 1px solid var(--color-border); background: white; color: var(--color-text);">Sair</button>
+        <header class="admin-header header">
+            <div class="container flex items-center justify-between admin-header-flex">
+                <div class="flex items-center gap-3 admin-header-title">
+                    <img src="assets/image%20copy.png" alt="Logo" style="width: 45px; height: 45px; object-fit: cover; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);">
+                    <div>
+                        <h1 class="header-title" style="margin: 0; font-size: 1.4rem;">Acampe Missionário</h1>
+                        <p class="header-subtitle" style="font-size: 0.85rem; margin: 0;">Painel Administrativo</p>
+                    </div>
+                </div>
+                <button onclick="window.logout()" class="btn btn-outline-white">Sair do Painel</button>
             </div>
         </header>
 
         <!-- Conteúdo do Painel -->
-        <div class="container" style="padding-top: var(--spacing-6); padding-bottom: var(--spacing-8);">
+        <div class="container dashboard-content">
             
-            <!-- Cabeçalho da Lista e Total -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-6);">
-                <h2 style="margin: 0; font-size: var(--font-size-lg);">Inscritos Recentes</h2>
-                <div style="background-color: var(--color-primary-light); color: var(--color-primary-dark); padding: var(--spacing-2) var(--spacing-4); border-radius: var(--border-radius); font-weight: bold;">
-                    Total: <span id="total-inscritos">0</span>
+            <!-- Cards de Estatísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(37, 99, 235, 0.1); color: var(--color-primary);">👥</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total de Inscritos</span>
+                        <strong class="stat-value" id="total-inscritos">0</strong>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">✈️</div>
+                    <div class="stat-info">
+                        <span class="stat-label">Disponíveis p/ Missões</span>
+                        <strong class="stat-value" id="total-missoes">-</strong>
+                    </div>
                 </div>
             </div>
 
             <!-- Tabela de Inscrições -->
-            <div id="lista-inscritos" style="background-color: white; border: 1px solid var(--color-border); border-radius: var(--border-radius); overflow-x: auto; margin-bottom: var(--spacing-6);">
-                <div style="padding: var(--spacing-8); text-align: center; color: var(--color-text-muted);">
-                    Carregando dados...
+            <div class="table-container">
+                <div class="table-header flex justify-between items-center" style="margin-bottom: 1.5rem;">
+                    <h2 style="margin:0; color: var(--color-primary-dark); font-size: 1.25rem;">Últimas Inscrições</h2>
+                    <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="carregarInscritos()">🔄 Atualizar</button>
                 </div>
-            </div>
-
-            <!-- Container de Detalhes da Inscrição (Oculto) -->
-            <div id="detalhe-inscricao" class="hidden" style="background-color: white; border: 1px solid var(--color-border); border-radius: var(--border-radius); padding: var(--spacing-6); margin-top: var(--spacing-6);">
-                <!-- Conteúdo detalhado será injetado pelo JS -->
+                <div id="lista-inscritos" class="table-responsive">
+                    <div class="text-center" style="padding: 2rem; color: var(--color-text-muted);">
+                        Carregando inscrições...
+                    </div>
+                </div>
             </div>
 
         </div>
     </main>
+
+    <!-- Modal de Detalhes -->
+    <div id="modal-detalhes" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-nome" style="margin: 0; color: white; font-size: var(--font-size-lg); font-weight: 600;">Ficha de Inscrição</h3>
+                <button onclick="window.fecharDetalhes()" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Conteúdo injetado via JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         
         login(username, password) {
-            // Hardcoded credentials para mock auth
             if (username === 'admin' && password === '123456') {
                 sessionStorage.setItem('admin_logged_in', 'true');
                 return true;
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         logout() {
             sessionStorage.removeItem('admin_logged_in');
-            renderizarTela(); // Atualiza UI
+            renderizarTela();
         }
     };
 
@@ -36,14 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Auth.isAuthenticated()) {
             loginSection.classList.add('hidden');
             dashboardSection.classList.remove('hidden');
-            // Inicializa a tabela de inscritos
-            console.log("Painel autenticado. Carregando dados...");
             carregarInscritos();
         } else {
             dashboardSection.classList.add('hidden');
             loginSection.classList.remove('hidden');
-            
-            // Limpa form se houver
             if (formLogin) formLogin.reset();
         }
     }
@@ -52,38 +47,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formLogin) {
         formLogin.addEventListener('submit', (e) => {
             e.preventDefault();
-            
             const usernameInput = document.getElementById('username').value.trim();
             const passwordInput = document.getElementById('password').value.trim();
             
-            // Limpar erros anteriores
             loginError.classList.add('hidden');
             
-            // Tenta logar
             if (Auth.login(usernameInput, passwordInput)) {
-                // Sucesso
                 renderizarTela();
             } else {
-                // Erro: Credenciais inválidas
                 loginError.classList.remove('hidden');
             }
         });
     }
 
     // -------------------------------------------------------------
-    // Lógica de Carregamento de Inscritos (T4)
+    // Lógica de Carregamento de Inscritos
     // -------------------------------------------------------------
-    async function carregarInscritos() {
+    window.carregarInscritos = async function() {
         const container = document.getElementById('lista-inscritos');
         const spanTotal = document.getElementById('total-inscritos');
+        const spanMissoes = document.getElementById('total-missoes');
         
         if (!container || !spanTotal) return;
 
-        container.innerHTML = `<div style="padding: var(--spacing-8); text-align: center; color: var(--color-text-muted);">Carregando dados...</div>`;
+        container.innerHTML = `<div class="text-center" style="padding: 3rem; color: var(--color-text-muted);">🔄 Carregando dados do Supabase...</div>`;
 
         try {
             const adminClient = getSupabaseAdmin();
-            if (!adminClient) throw new Error("Cliente Admin Supabase não configurado.");
+            if (!adminClient) throw new Error("Cliente Supabase não configurado.");
 
             const { data, error } = await adminClient
                 .from('inscricoes')
@@ -93,47 +84,65 @@ document.addEventListener('DOMContentLoaded', () => {
             if (error) throw error;
 
             spanTotal.innerText = data.length;
+            
+            // Calcula total disponíveis para missões
+            const disponiveis = data.filter(i => i.disponivel_missoes === 'Sim').length;
+            if(spanMissoes) spanMissoes.innerText = disponiveis;
 
             if (data.length === 0) {
-                container.innerHTML = `<div style="padding: var(--spacing-8); text-align: center; color: var(--color-text-muted);">Nenhuma inscrição encontrada até o momento.</div>`;
+                container.innerHTML = `<div class="text-center" style="padding: 3rem; color: var(--color-text-muted);">Nenhuma inscrição encontrada até o momento.</div>`;
                 return;
             }
 
-            // Utilitários de formatação
             const formatDate = (isoString) => {
-                const date = new Date(isoString);
-                return date.toLocaleDateString('pt-BR');
+                return new Date(isoString).toLocaleDateString('pt-BR');
             };
-            const formatBool = (bool) => bool ? 'Sim' : 'Não';
 
-            // Montar Tabela
+            const getBadgeHtml = (text, type) => {
+                const colorClass = type === 'success' ? 'badge-green' : 'badge-gray';
+                return `<span class="badge ${colorClass}">${text}</span>`;
+            };
+
+            // Montar Tabela Modernizada
             let tableHTML = `
-                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: var(--font-size-sm);">
+                <table class="admin-table">
                     <thead>
-                        <tr style="border-bottom: 2px solid var(--color-border); background-color: var(--color-bg);">
-                            <th style="padding: var(--spacing-3);">Data</th>
-                            <th style="padding: var(--spacing-3);">Nome</th>
-                            <th style="padding: var(--spacing-3);">Cristão?</th>
-                            <th style="padding: var(--spacing-3);">Águas</th>
-                            <th style="padding: var(--spacing-3);">Espírito Santo</th>
-                            <th style="padding: var(--spacing-3);">Comunhão</th>
+                        <tr>
+                            <th>Data</th>
+                            <th>Nome</th>
+                            <th>Batismo (Águas)</th>
+                            <th>Disp. Missões</th>
+                            <th>Dons</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
             `;
 
             data.forEach(item => {
-                // Converte o objeto item para string JSON safely to pass to onclick
                 const itemJSON = encodeURIComponent(JSON.stringify(item));
                 
+                const missaoBadge = item.disponivel_missoes === 'Sim' ? getBadgeHtml('Sim', 'success') : getBadgeHtml('Não', 'neutral');
+                
+                // Tratar a data de batismo se existir
+                let dtBatismoStr = '-';
+                if(item.data_batismo_aguas) {
+                    const partes = item.data_batismo_aguas.split('-');
+                    if(partes.length === 3) {
+                        dtBatismoStr = `${partes[2]}/${partes[1]}/${partes[0]}`; // YYYY-MM-DD to DD/MM/YYYY
+                    } else {
+                        dtBatismoStr = item.data_batismo_aguas;
+                    }
+                }
+
                 tableHTML += `
-                    <tr style="border-bottom: 1px solid var(--color-border); cursor: pointer;" class="table-row-hover" onclick="verDetalhes('${itemJSON}')">
-                        <td style="padding: var(--spacing-3); color: var(--color-text-muted);">${formatDate(item.created_at)}</td>
-                        <td style="padding: var(--spacing-3); font-weight: bold; color: var(--color-text);">${item.nome || '-'}</td>
-                        <td style="padding: var(--spacing-3);">${formatBool(item.cristao)}</td>
-                        <td style="padding: var(--spacing-3);">${formatBool(item.batizado_aguas)}</td>
-                        <td style="padding: var(--spacing-3);">${item.batizado_espirito || '-'}</td>
-                        <td style="padding: var(--spacing-3);">${formatBool(item.em_comunhao)}</td>
+                    <tr onclick="verDetalhes('${itemJSON}')">
+                        <td style="color: var(--color-text-muted);">${formatDate(item.created_at)}</td>
+                        <td style="font-weight: 600; color: var(--color-text);">${item.nome || '-'}</td>
+                        <td>${dtBatismoStr}</td>
+                        <td>${missaoBadge}</td>
+                        <td>${item.cre_dons || '-'}</td>
+                        <td><button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Ver Ficha</button></td>
                     </tr>
                 `;
             });
@@ -147,73 +156,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (err) {
             console.error("Erro ao buscar inscrições:", err);
-            container.innerHTML = `<div style="padding: var(--spacing-8); text-align: center; color: var(--color-error);">❌ Erro ao carregar os dados. Verifique o console.</div>`;
+            container.innerHTML = `<div class="text-center" style="padding: 3rem; color: var(--color-error);">❌ Erro ao carregar os dados. Verifique a aba Console (F12).</div>`;
         }
     }
 
     // -------------------------------------------------------------
-    // Visualização de Detalhes (T5)
+    // Modal de Detalhes
     // -------------------------------------------------------------
     window.verDetalhes = function(inscricaoJSON) {
         const inscricao = JSON.parse(decodeURIComponent(inscricaoJSON));
-        const container = document.getElementById('detalhe-inscricao');
+        const modal = document.getElementById('modal-detalhes');
+        const modalBody = document.getElementById('modal-body-content');
+        const modalNome = document.getElementById('modal-nome');
         
-        if (!container) return;
+        if (!modal || !modalBody) return;
         
-        // Utilitários
-        const formatDate = (isoString) => new Date(isoString).toLocaleString('pt-BR');
-        const formatBool = (bool) => bool ? 'Sim' : 'Não';
+        modalNome.innerText = inscricao.nome || 'Ficha de Inscrição';
         
+        const formatDateObj = (isoString) => new Date(isoString).toLocaleString('pt-BR');
+        
+        let dtBatismoStr = '-';
+        if(inscricao.data_batismo_aguas) {
+            const p = inscricao.data_batismo_aguas.split('-');
+            if(p.length === 3) dtBatismoStr = `${p[2]}/${p[1]}/${p[0]}`;
+            else dtBatismoStr = inscricao.data_batismo_aguas;
+        }
+
         const html = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-4);">
-                <h3 style="margin: 0; color: var(--color-primary-dark);">Ficha: ${inscricao.nome || 'Não informado'}</h3>
-                <button onclick="window.fecharDetalhes()" class="btn" style="background: var(--color-error); color: white; border: none; padding: var(--spacing-2) var(--spacing-4);">X Fechar</button>
-            </div>
-            
-            <div class="details-grid" style="margin-bottom: var(--spacing-6);">
-                <div>
-                    <strong style="color: var(--color-text-muted);">Data da Inscrição:</strong>
-                    <div>${formatDate(inscricao.created_at)}</div>
+            <div class="detail-grid">
+                <div class="detail-block">
+                    <span class="detail-label">Enviado em</span>
+                    <span class="detail-value">${formatDateObj(inscricao.created_at)}</span>
                 </div>
-                <div>
-                    <strong style="color: var(--color-text-muted);">É Cristão?</strong>
-                    <div>${formatBool(inscricao.cristao)} (Há ${inscricao.tempo_cristao || '-'})</div>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Batismo nas Águas</span>
+                    <span class="detail-value">${dtBatismoStr}</span>
                 </div>
-                <div>
-                    <strong style="color: var(--color-text-muted);">Comunhão em Igreja?</strong>
-                    <div>${formatBool(inscricao.em_comunhao)} (Há ${inscricao.tempo_comunhao || '-'})</div>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Batismo no Espírito Santo</span>
+                    <span class="detail-value">${inscricao.batismo_espirito || '-'}</span>
                 </div>
-                <div>
-                    <strong style="color: var(--color-text-muted);">Batizado nas Águas?</strong>
-                    <div>${formatBool(inscricao.batizado_aguas)}</div>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Crê nos Dons Espirituais?</span>
+                    <span class="detail-value">${inscricao.cre_dons || '-'}</span>
                 </div>
-                <div>
-                    <strong style="color: var(--color-text-muted);">Batizado no Espírito Santo?</strong>
-                    <div>${inscricao.batizado_espirito || '-'}</div>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Crê na volta de Cristo?</span>
+                    <span class="detail-value">${inscricao.cre_volta_cristo || '-'}</span>
                 </div>
-            </div>
-            
-            <div style="background-color: var(--color-bg); padding: var(--spacing-4); border-radius: var(--border-radius); border: 1px solid var(--color-border);">
-                <strong style="color: var(--color-primary); display: block; margin-bottom: var(--spacing-2);">Motivo para participar:</strong>
-                <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${inscricao.motivo || 'Nenhum motivo fornecido.'}</p>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Já participou de missões?</span>
+                    <span class="detail-value">${inscricao.ja_participou_missoes || '-'}</span>
+                </div>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Já acampou com esse objetivo?</span>
+                    <span class="detail-value">${inscricao.ja_acampou || '-'}</span>
+                </div>
+                
+                <div class="detail-block">
+                    <span class="detail-label">Disponível para Missões?</span>
+                    <span class="detail-value badge ${inscricao.disponivel_missoes === 'Sim' ? 'badge-green' : 'badge-gray'}">${inscricao.disponivel_missoes || '-'}</span>
+                </div>
+                
+                <div class="detail-block detail-full">
+                    <span class="detail-label">Motivo para participar</span>
+                    <span class="detail-value" style="display: block; margin-top: 0.5rem; line-height: 1.5; font-style: italic;">"${inscricao.motivo || 'Não informado.'}"</span>
+                </div>
+                
+                <div class="detail-block detail-full" style="background: rgba(37,99,235,0.05); border-color: rgba(37,99,235,0.2);">
+                    <span class="detail-label" style="color: var(--color-primary);">Termos de Conduta Aceitos:</span>
+                    <ul style="margin: 0.5rem 0 0 1.2rem; font-size: 0.85rem; color: var(--color-text-muted);">
+                        <li>Ciente de ficar sem rede social: <strong>${inscricao.ciente_rede_social}</strong></li>
+                        <li>Resolvido a seguir orientações: <strong>${inscricao.resolvido_orientacoes}</strong></li>
+                        <li>Disponível para orar e jejuar: <strong>${inscricao.disponivel_orar_jejuar}</strong></li>
+                    </ul>
+                </div>
             </div>
         `;
         
-        container.innerHTML = html;
-        container.classList.remove('hidden');
-        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        modalBody.innerHTML = html;
+        modal.classList.remove('hidden');
     };
 
     window.fecharDetalhes = function() {
-        const container = document.getElementById('detalhe-inscricao');
-        if (container) {
-            container.classList.add('hidden');
+        const modal = document.getElementById('modal-detalhes');
+        if (modal) {
+            modal.classList.add('hidden');
         }
     };
+    
+    // Fechar modal clicando fora dele
+    document.getElementById('modal-detalhes')?.addEventListener('click', function(e) {
+        if(e.target === this) {
+            window.fecharDetalhes();
+        }
+    });
 
-    // Expõe logout globalmente para o botão (que será criado na T3/T4)
     window.logout = Auth.logout;
 
-    // Inicialização da página
+    // Inicialização
     renderizarTela();
 });
