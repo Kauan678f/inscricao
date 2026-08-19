@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscrição - 1º Acampe Missionário</title>
+    <link rel="icon" href="assets/image.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -12,7 +13,10 @@
 <body>
     <header class="header">
         <div class="container flex flex-col items-center text-center gap-2">
-            <h1 class="header-title">1º Acampe Missionário AD</h1>
+            <h1 class="header-title flex items-center justify-center gap-3">
+                <img src="assets/image%20copy.png" alt="Cartaz" class="hero-logo-inline">
+                1º Acampe Missionário AD
+            </h1>
             <p class="header-subtitle">
                 Marcionilio Souza - BA | 25, 26 e 27 de Setembro de 2026
             </p>
@@ -197,17 +201,9 @@
                     <span class="error-message">Este campo é obrigatório.</span>
                 </div>
 
-                <!-- Checkbox de Aceite -->
-                <div class="form-group terms-group">
-                    <label class="checkbox-label" for="aceite_termos">
-                        <input type="checkbox" id="aceite_termos" name="aceite_termos" class="checkbox-input" required>
-                        <span>Declaro que todas as informações acima são verdadeiras e confirmo minha inscrição no projeto.</span>
-                    </label>
-                </div>
-
                 <!-- Botão Enviar -->
                 <div class="form-group submit-group">
-                    <button type="submit" id="btn-submit" class="btn btn-primary btn-block" disabled>
+                    <button type="submit" id="btn-submit" class="btn btn-primary btn-block">
                         Enviar Inscrição
                     </button>
                 </div>

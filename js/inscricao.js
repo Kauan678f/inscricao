@@ -1,14 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const checkboxAceite = document.getElementById('aceite_termos');
-    const btnSubmit = document.getElementById('btn-submit');
-
-    // Habilita o botão ao aceitar os termos
-    if (checkboxAceite && btnSubmit) {
-        checkboxAceite.addEventListener('change', (e) => {
-            btnSubmit.disabled = !e.target.checked;
-        });
-    }
-
     // Função de validação
     function validarFormulario() {
         let isValid = true;
