@@ -175,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if(document.getElementById('filtro-cristao')) document.getElementById('filtro-cristao').value = '';
         if(document.getElementById('filtro-missoes')) document.getElementById('filtro-missoes').value = '';
         if(document.getElementById('filtro-espirito')) document.getElementById('filtro-espirito').value = '';
+        if(document.getElementById('filtro-dons')) document.getElementById('filtro-dons').value = '';
+        if(document.getElementById('filtro-volta')) document.getElementById('filtro-volta').value = '';
+        if(document.getElementById('filtro-ja-missoes')) document.getElementById('filtro-ja-missoes').value = '';
+        if(document.getElementById('filtro-acampou')) document.getElementById('filtro-acampou').value = '';
         if(document.getElementById('filtro-termos')) document.getElementById('filtro-termos').value = '';
         filtrarTabela();
     };
@@ -184,6 +188,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const filtroCristao = document.getElementById('filtro-cristao')?.value || '';
         const filtroMissoes = document.getElementById('filtro-missoes')?.value || '';
         const filtroEspirito = document.getElementById('filtro-espirito')?.value || '';
+        const filtroDons = document.getElementById('filtro-dons')?.value || '';
+        const filtroVolta = document.getElementById('filtro-volta')?.value || '';
+        const filtroJaMissoes = document.getElementById('filtro-ja-missoes')?.value || '';
+        const filtroAcampou = document.getElementById('filtro-acampou')?.value || '';
         const filtroTermos = document.getElementById('filtro-termos')?.value || '';
         
         let filtrado = window.todasInscricoes;
@@ -199,6 +207,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if(filtroEspirito) {
             filtrado = filtrado.filter(item => item.batismo_espirito === filtroEspirito);
+        }
+        if(filtroDons) {
+            filtrado = filtrado.filter(item => item.cre_dons === filtroDons);
+        }
+        if(filtroVolta) {
+            filtrado = filtrado.filter(item => item.cre_volta_cristo === filtroVolta);
+        }
+        if(filtroJaMissoes) {
+            filtrado = filtrado.filter(item => item.ja_participou_missoes === filtroJaMissoes);
+        }
+        if(filtroAcampou) {
+            filtrado = filtrado.filter(item => item.ja_acampou === filtroAcampou);
         }
         if(filtroTermos === 'Sim') {
             // Verifica se a pessoa respondeu Sim para todos os termos de conduta exigidos

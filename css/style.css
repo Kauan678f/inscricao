@@ -96,7 +96,7 @@ body {
 
 .logo-tooltip {
     position: absolute;
-    top: 120%; /* Aparece logo abaixo do tÃ­tulo */
+    top: 120%; /* Aparece logo abaixo do tÃƒÂ­tulo */
     left: 50%;
     transform: translateX(-50%) translateY(15px);
     width: 280px;
@@ -117,7 +117,7 @@ body {
     border-radius: 9px; /* Um pouco menor que o container */
 }
 
-/* O triÃ¢ngulo em cima do tooltip */
+/* O triÃƒÂ¢ngulo em cima do tooltip */
 .logo-tooltip::before {
     content: '';
     position: absolute;
@@ -405,7 +405,7 @@ textarea.form-input {
         padding: 0 0.5rem;
     }
     .header {
-        padding: 2.5rem 0 2rem; /* Menos espaÃ§o sobrando no mobile */
+        padding: 2.5rem 0 2rem; /* Menos espaÃƒÂ§o sobrando no mobile */
     }
     /* Conserta o tooltip vazando da tela */
     .logo-tooltip {
@@ -460,7 +460,7 @@ textarea.form-input {
     border-color: white;
 }
 
-/* Cards de Estatísticas */
+/* Cards de EstatÃ­sticas */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -680,6 +680,32 @@ textarea.form-input {
         padding: 0.3rem 0.6rem;
         font-size: 0.8rem;
     }
+    
+    /* Responsividade para Toolbar e Filtros no Mobile */
+    .toolbar > .flex {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    .toolbar input[type="text"] {
+        width: 100% !important;
+    }
+    .toolbar div[style*="flex-grow"] {
+        display: none !important;
+    }
+    #painel-filtros > .flex {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+    #painel-filtros select {
+        width: 100% !important;
+        max-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .toolbar button {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.3rem;
+    }
 }
 
 .detail-block {
@@ -720,7 +746,7 @@ textarea.form-input {
 .z-10 { z-index: 10; }
 
 /* ==========================================================================
-   Impress�o (Print Mode)
+   Impressão (Print Mode)
    ========================================================================== */
 
 .print-only {
@@ -728,7 +754,7 @@ textarea.form-input {
 }
 
 @media print {
-    /* Ocultar elementos desnecess�rios na impress�o */
+    /* Ocultar elementos desnecessários na impressão */
     body {
         background: white !important;
     }
@@ -741,7 +767,7 @@ textarea.form-input {
         display: none !important;
     }
 
-    /* Mostrar e formatar a lista de impress�o */
+    /* Mostrar e formatar a lista de impressão */
     .print-only {
         display: block !important;
     }
