@@ -399,9 +399,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="detail-block detail-full" style="background: rgba(37,99,235,0.05); border-color: rgba(37,99,235,0.2);">
                     <span class="detail-label" style="color: var(--color-primary);">Termos de Conduta Aceitos:</span>
                     <ul style="margin: 0.5rem 0 0 1.2rem; font-size: 0.85rem; color: var(--color-text-muted);">
-                        <li>Ciente de ficar sem rede social: <strong>${inscricao.ciente_rede_social}</strong></li>
-                        <li>Resolvido a seguir orientações: <strong>${inscricao.resolvido_orientacoes}</strong></li>
-                        <li>Disponível para orar e jejuar: <strong>${inscricao.disponivel_orar_jejuar}</strong></li>
+                        <li>Ciente de ficar sem rede social: <strong>${inscricao.ciente_rede_social || '-'}</strong></li>
+                        <li>Resolvido a seguir orientações: <strong>${inscricao.resolvido_orientacoes || '-'}</strong></li>
+                        <li>Disponível para orar e jejuar: <strong>${inscricao.disponivel_orar_jejuar || '-'}</strong></li>
                     </ul>
                 </div>
             </div>

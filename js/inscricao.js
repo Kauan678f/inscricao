@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         validarRadio('ciente_rede_social', 'group-ciente-rede');
         validarRadio('resolvido_orientacoes', 'group-resolvido-orientacoes');
         validarRadio('disponivel_orar_jejuar', 'group-disponivel-orar');
+        validarRadio('ciente_taxa', 'group-ciente-taxa');
         validarTexto('motivo', 'group-motivo');
 
         if (!isValid && primeiroCampoComErro) {

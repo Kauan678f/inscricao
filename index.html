@@ -53,6 +53,11 @@
                 <p id="error-message-text">Não foi possível enviar sua inscrição no momento. Verifique sua conexão e tente novamente.</p>
             </div>
 
+            <div class="alert-box" style="background-color: #fff3cd; border: 1px solid #ffe69c; color: #664d03; margin-bottom: 2rem;">
+                <h3 style="color: #664d03; margin-top: 0; font-size: 1.2rem;">⚠️ Aviso Importante: Taxa de Inscrição</h3>
+                <p style="margin-bottom: 0;">Gostaríamos de informar que haverá uma <strong>taxa financeira</strong> para a participação no acampamento. O valor exato e as opções de pagamento serão repassados em breve pela nossa equipe.</p>
+            </div>
+            
             <form id="form-inscricao" class="form-container" novalidate>
                 <div class="form-header">
                     <h2>Formulário de Inscrição</h2>
@@ -219,7 +224,17 @@
                     <span class="error-message">Este campo é obrigatório.</span>
                 </div>
 
-                <!-- Botão Enviar -->
+                <!-- Ciente da Taxa -->
+                <div class="form-group" id="group-ciente-taxa" style="background-color: #fff3cd; border: 1px solid #ffe69c; color: #664d03; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <span class="form-label" style="font-weight: bold; margin-bottom: 0.5rem; display: block;">⚠️ Lembrete final: Está ciente de que haverá a cobrança de uma taxa financeira para participar? *</span>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="ciente_taxa" value="Sim" class="radio-input" required> Sim, estou ciente
+                        </label>
+                    </div>
+                    <span class="error-message">Você precisa marcar a opção para prosseguir.</span>
+                </div>
+
                 <div class="form-group submit-group">
                     <button type="submit" id="btn-submit" class="btn btn-primary btn-block">
                         Enviar Inscrição
