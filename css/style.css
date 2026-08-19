@@ -81,6 +81,58 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     display: inline-block;
     flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.logo-hover-container {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+}
+
+.logo-hover-container:hover .hero-logo-inline {
+    transform: scale(1.1);
+}
+
+.logo-tooltip {
+    position: absolute;
+    top: 120%; /* Aparece logo abaixo do título */
+    left: 50%;
+    transform: translateX(-50%) translateY(15px);
+    width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 100;
+    pointer-events: none;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+.logo-tooltip img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 9px; /* Um pouco menor que o container */
+}
+
+/* O triângulo em cima do tooltip */
+.logo-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 0 10px 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent rgba(255, 255, 255, 0.9) transparent;
+}
+
+.logo-hover-container:hover .logo-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
 
 .header-title {
@@ -348,7 +400,24 @@ textarea.form-input {
     .header-title {
         font-size: 1.25rem; /* Menor em celulares */
     }
+    .header-subtitle {
+        font-size: 0.85rem;
+        padding: 0 0.5rem;
+    }
     .header {
         padding: 2.5rem 0 2rem; /* Menos espaço sobrando no mobile */
+    }
+    /* Conserta o tooltip vazando da tela */
+    .logo-tooltip {
+        width: 260px;
+        left: 0;
+        transform: translateY(15px);
+    }
+    .logo-hover-container:hover .logo-tooltip {
+        transform: translateY(0);
+    }
+    .logo-tooltip::before {
+        left: 15px; /* Alinha a setinha com a logo que ficou na esquerda */
+        transform: none;
     }
 }
