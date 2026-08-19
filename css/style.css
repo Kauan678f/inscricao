@@ -754,24 +754,38 @@ textarea.form-input {
 }
 
 @media print {
-    /* Ocultar elementos desnecessários na impressão */
-    body {
-        background: white !important;
-    }
-    .admin-login-wrapper,
-    .admin-header,
-    .stats-grid,
-    .toolbar,
-    .modal-overlay,
-    .table-container {
-        display: none !important;
-    }
-
-    /* Mostrar e formatar a lista de impressão */
-    .print-only {
-        display: block !important;
+    @page {
+        margin: 10mm;
     }
     
+    html, body, .admin-body {
+        height: auto !important;
+        min-height: 0 !important;
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Ocultar tudo que não for a área de impressão */
+    body * {
+        visibility: hidden;
+    }
+    
+    /* Mostrar apenas a área de impressão e seus filhos */
+    #print-container, #print-container * {
+        visibility: visible;
+    }
+    
+    #print-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: block !important;
+    }
+
     .print-header {
         text-align: center;
         margin-bottom: 20px;
@@ -804,5 +818,6 @@ textarea.form-input {
     .print-table th {
         background-color: #f2f2f2 !important;
         -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 }
