@@ -35,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validação dos campos
         validarTexto('nome', 'group-nome');
-        validarTexto('data_batismo_aguas', 'group-data-batismo');
+        validarRadio('e_cristao', 'group-cristao');
+        // validarTexto('data_batismo_aguas', 'group-data-batismo'); // Removido do required porque não-cristãos não têm.
         validarRadio('batismo_espirito', 'group-batizado-espirito');
         validarRadio('cre_dons', 'group-cre-dons');
         validarRadio('cre_volta_cristo', 'group-cre-volta');
@@ -69,10 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSubmit.innerText = 'Enviando aguarde...';
 
         try {
+            const dtBatismoRaw = document.getElementById('data_batismo_aguas').value;
             // Se você quiser integrar com o Supabase depois, o payload é este
             const payload = {
                 nome: document.getElementById('nome').value.trim(),
-                data_batismo_aguas: document.getElementById('data_batismo_aguas').value,
+                e_cristao: document.querySelector('input[name="e_cristao"]:checked').value,
+                data_batismo_aguas: dtBatismoRaw ? dtBatismoRaw : null,
                 batismo_espirito: document.querySelector('input[name="batismo_espirito"]:checked').value,
                 cre_dons: document.querySelector('input[name="cre_dons"]:checked').value,
                 cre_volta_cristo: document.querySelector('input[name="cre_volta_cristo"]:checked').value,

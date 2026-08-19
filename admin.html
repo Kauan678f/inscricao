@@ -88,14 +88,51 @@
                     <h2 style="margin:0; color: var(--color-primary-dark); font-size: 1.25rem;">Inscrições</h2>
                     
                     <!-- Barra de Ferramentas -->
-                    <div class="toolbar flex items-center gap-2" style="flex-wrap: wrap;">
-                        <input type="text" id="input-busca" placeholder="🔍 Buscar por nome..." class="form-input" style="width: auto; min-width: 200px; padding: 0.4rem 0.8rem; font-size: 0.85rem;" oninput="filtrarTabela()">
+                    <div class="toolbar flex flex-col gap-2" style="width: 100%;">
+                        <div class="flex items-center gap-2" style="flex-wrap: wrap; width: 100%;">
+                            <input type="text" id="input-busca" placeholder="🔍 Buscar por nome..." class="form-input" style="width: auto; min-width: 180px; padding: 0.4rem 0.8rem; font-size: 0.85rem;" oninput="filtrarTabela()">
+                            
+                            <button class="btn btn-outline" style="padding: 0.4rem 0.6rem; font-size: 0.85rem;" onclick="toggleFiltros()" title="Filtros Avançados">⚙️ Filtros</button>
+                            
+                            <div style="flex-grow: 1;"></div> <!-- Empurra os botões de ação para a direita -->
+                            
+                            <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-color: #ef4444; color: #ef4444;" onclick="apagarSelecionados()">🗑️ Apagar</button>
+                            <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="imprimirLista(true)">🖨️ Selecionados</button>
+                            <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="imprimirLista(false)">🖨️ Todos</button>
+                        </div>
                         
-                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-color: #ef4444; color: #ef4444;" onclick="apagarSelecionados()">🗑️ Apagar</button>
-                        
-                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="imprimirLista(true)">🖨️ Selecionados</button>
-                        
-                        <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="imprimirLista(false)">🖨️ Todos</button>
+                        <!-- Painel de Filtros Avançados -->
+                        <div id="painel-filtros" class="hidden flex flex-col gap-2" style="background: var(--color-bg); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); margin-top: 0.5rem; width: 100%;">
+                            <div class="flex items-center justify-between" style="width: 100%;">
+                                <span style="font-size: 0.9rem; font-weight: 600; color: var(--color-primary-dark);">Quero ver na tabela apenas pessoas que:</span>
+                                <button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="limparFiltros()">Limpar Tudo</button>
+                            </div>
+                            
+                            <div class="flex items-center gap-2" style="flex-wrap: wrap;">
+                                <select id="filtro-cristao" class="form-input" style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.85rem;" onchange="filtrarTabela()">
+                                    <option value="">✝️ São Cristãos? (Mostrar Todos)</option>
+                                    <option value="Sim">Apenas Cristãos</option>
+                                    <option value="Não">Apenas NÃO Cristãos</option>
+                                </select>
+
+                                <select id="filtro-missoes" class="form-input" style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.85rem;" onchange="filtrarTabela()">
+                                    <option value="">🌍 Disp. para Missões? (Mostrar Todos)</option>
+                                    <option value="Sim">Apenas Disponíveis</option>
+                                    <option value="Não">Apenas Indisponíveis</option>
+                                </select>
+
+                                <select id="filtro-espirito" class="form-input" style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.85rem;" onchange="filtrarTabela()">
+                                    <option value="">🕊️ Batizados no Espírito? (Mostrar Todos)</option>
+                                    <option value="Sim">Apenas os Batizados</option>
+                                    <option value="Não">Apenas os Não Batizados</option>
+                                </select>
+
+                                <select id="filtro-termos" class="form-input" style="width: auto; padding: 0.4rem 0.6rem; font-size: 0.85rem;" onchange="filtrarTabela()">
+                                    <option value="">📜 Aceitaram as Regras? (Mostrar Todos)</option>
+                                    <option value="Sim">Aceitaram todos os Termos</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="lista-inscritos" class="table-responsive">

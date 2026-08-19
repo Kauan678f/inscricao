@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </th>
                         <th>Data</th>
                         <th>Nome</th>
+                        <th>É Cristão?</th>
                         <th>Batismo (Águas)</th>
                         <th>Disp. Missões</th>
                         <th>Dons</th>
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lista.forEach(item => {
             const itemJSON = encodeURIComponent(JSON.stringify(item));
             const missaoBadge = item.disponivel_missoes === 'Sim' ? getBadgeHtml('Sim', 'success') : getBadgeHtml('Não', 'neutral');
+            const cristaoBadge = item.e_cristao === 'Sim' ? getBadgeHtml('Sim', 'success') : getBadgeHtml(item.e_cristao || '-', 'neutral');
             
             let dtBatismoStr = '-';
             if(item.data_batismo_aguas) {
@@ -146,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                     <td style="color: var(--color-text-muted);" onclick="verDetalhes('${itemJSON}')">${formatDate(item.created_at)}</td>
                     <td style="font-weight: 600; color: var(--color-text);" onclick="verDetalhes('${itemJSON}')">${item.nome || '-'}</td>
+                    <td onclick="verDetalhes('${itemJSON}')">${cristaoBadge}</td>
                     <td onclick="verDetalhes('${itemJSON}')">${dtBatismoStr}</td>
                     <td onclick="verDetalhes('${itemJSON}')">${missaoBadge}</td>
                     <td onclick="verDetalhes('${itemJSON}')">${item.cre_dons || '-'}</td>
@@ -162,16 +165,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // Funcionalidades da Toolbar
     // -------------------------------------------------------------
     
-    // Busca e Filtro
+    // Busca e Filtros Avançados
+    window.toggleFiltros = function() {
+        const painel = document.getElementById('painel-filtros');
+        if(painel) painel.classList.toggle('hidden');
+    };
+
+    window.limparFiltros = function() {
+        if(document.getElementById('filtro-cristao')) document.getElementById('filtro-cristao').value = '';
+        if(document.getElementById('filtro-missoes')) document.getElementById('filtro-missoes').value = '';
+        if(document.getElementById('filtro-espirito')) document.getElementById('filtro-espirito').value = '';
+        if(document.getElementById('filtro-termos')) document.getElementById('filtro-termos').value = '';
+        filtrarTabela();
+    };
+
     window.filtrarTabela = function() {
         const termo = document.getElementById('input-busca').value.toLowerCase();
-        if(!termo) {
-            renderizarTabela(window.todasInscricoes);
-            return;
+        const filtroCristao = document.getElementById('filtro-cristao')?.value || '';
+        const filtroMissoes = document.getElementById('filtro-missoes')?.value || '';
+        const filtroEspirito = document.getElementById('filtro-espirito')?.value || '';
+        const filtroTermos = document.getElementById('filtro-termos')?.value || '';
+        
+        let filtrado = window.todasInscricoes;
+
+        if(termo) {
+            filtrado = filtrado.filter(item => (item.nome && item.nome.toLowerCase().includes(termo)));
         }
-        const filtrado = window.todasInscricoes.filter(item => {
-            return (item.nome && item.nome.toLowerCase().includes(termo));
-        });
+        if(filtroCristao) {
+            filtrado = filtrado.filter(item => item.e_cristao === filtroCristao);
+        }
+        if(filtroMissoes) {
+            filtrado = filtrado.filter(item => item.disponivel_missoes === filtroMissoes);
+        }
+        if(filtroEspirito) {
+            filtrado = filtrado.filter(item => item.batismo_espirito === filtroEspirito);
+        }
+        if(filtroTermos === 'Sim') {
+            // Verifica se a pessoa respondeu Sim para todos os termos de conduta exigidos
+            filtrado = filtrado.filter(item => 
+                item.ciente_rede_social === 'Sim' && 
+                item.resolvido_orientacoes === 'Sim' && 
+                item.disponivel_orar_jejuar === 'Sim'
+            );
+        }
+        
         renderizarTabela(filtrado);
     };
 
@@ -294,6 +331,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="detail-value">${formatDateObj(inscricao.created_at)}</span>
                 </div>
                 
+                <div class="detail-block">
+                    <span class="detail-label">É Cristão?</span>
+                    <span class="detail-value badge ${inscricao.e_cristao === 'Sim' ? 'badge-green' : 'badge-gray'}">${inscricao.e_cristao || '-'}</span>
+                </div>
+
                 <div class="detail-block">
                     <span class="detail-label">Batismo nas Águas</span>
                     <span class="detail-value">${dtBatismoStr}</span>
