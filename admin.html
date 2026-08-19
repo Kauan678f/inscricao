@@ -84,9 +84,19 @@
 
             <!-- Tabela de Inscrições -->
             <div class="table-container">
-                <div class="table-header flex justify-between items-center" style="margin-bottom: 1.5rem;">
-                    <h2 style="margin:0; color: var(--color-primary-dark); font-size: 1.25rem;">Últimas Inscrições</h2>
-                    <button class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="carregarInscritos()">🔄 Atualizar</button>
+                <div class="table-header flex justify-between items-center" style="margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="margin:0; color: var(--color-primary-dark); font-size: 1.25rem;">Inscrições</h2>
+                    
+                    <!-- Barra de Ferramentas -->
+                    <div class="toolbar flex items-center gap-2" style="flex-wrap: wrap;">
+                        <input type="text" id="input-busca" placeholder="🔍 Buscar por nome..." class="form-input" style="width: auto; min-width: 200px; padding: 0.4rem 0.8rem; font-size: 0.85rem;" oninput="filtrarTabela()">
+                        
+                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-color: #ef4444; color: #ef4444;" onclick="apagarSelecionados()">🗑️ Apagar</button>
+                        
+                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="imprimirLista(true)">🖨️ Selecionados</button>
+                        
+                        <button class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="imprimirLista(false)">🖨️ Todos</button>
+                    </div>
                 </div>
                 <div id="lista-inscritos" class="table-responsive">
                     <div class="text-center" style="padding: 2rem; color: var(--color-text-muted);">
@@ -109,6 +119,26 @@
                 <!-- Conteúdo injetado via JS -->
             </div>
         </div>
+    </div>
+
+    <!-- Container de Impressão (Apenas visível na impressora) -->
+    <div id="print-container" class="print-only">
+        <div class="print-header">
+            <h1>Lista de Presença - 1º Acampe Missionário AD</h1>
+            <p>Marcionilio Souza - BA | 25, 26 e 27 de Setembro de 2026</p>
+        </div>
+        <table class="print-table" id="print-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Nº</th>
+                    <th style="width: 45%;">Nome Completo</th>
+                    <th style="width: 50%;">Assinatura</th>
+                </tr>
+            </thead>
+            <tbody id="print-tbody">
+                <!-- Injetado via JS -->
+            </tbody>
+        </table>
     </div>
 
     <!-- Scripts -->

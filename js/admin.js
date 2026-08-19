@@ -5,17 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const formLogin = document.getElementById('form-login');
     const loginError = document.getElementById('login-error');
     
-    // Ocultar erro por padrão
-    if (loginError) {
-        loginError.classList.add('hidden');
-    }
+    // Estado Global para Filtros e Impressão
+    window.todasInscricoes = [];
+    window.inscricoesFiltradas = [];
     
-    // --- Módulo de Autenticação (Mock) ---
+    if (loginError) loginError.classList.add('hidden');
+    
     const Auth = {
-        isAuthenticated() {
-            return sessionStorage.getItem('admin_logged_in') === 'true';
-        },
-        
+        isAuthenticated() { return sessionStorage.getItem('admin_logged_in') === 'true'; },
         login(username, password) {
             if (username === 'admin' && password === '123456') {
                 sessionStorage.setItem('admin_logged_in', 'true');
@@ -23,14 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return false;
         },
-        
         logout() {
             sessionStorage.removeItem('admin_logged_in');
             renderizarTela();
         }
     };
 
-    // --- Controle de UI ---
     function renderizarTela() {
         if (Auth.isAuthenticated()) {
             loginSection.classList.add('hidden');
@@ -43,30 +38,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Event Listeners ---
     if (formLogin) {
         formLogin.addEventListener('submit', (e) => {
             e.preventDefault();
-            const usernameInput = document.getElementById('username').value.trim();
-            const passwordInput = document.getElementById('password').value.trim();
-            
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value.trim();
             loginError.classList.add('hidden');
-            
-            if (Auth.login(usernameInput, passwordInput)) {
-                renderizarTela();
-            } else {
-                loginError.classList.remove('hidden');
-            }
+            if (Auth.login(u, p)) renderizarTela();
+            else loginError.classList.remove('hidden');
         });
     }
 
     // -------------------------------------------------------------
-    // Lógica de Carregamento de Inscritos
+    // Buscar Dados do Supabase
     // -------------------------------------------------------------
     window.carregarInscritos = async function() {
         const container = document.getElementById('lista-inscritos');
         const spanTotal = document.getElementById('total-inscritos');
         const spanMissoes = document.getElementById('total-missoes');
+        const inputBusca = document.getElementById('input-busca');
         
         if (!container || !spanTotal) return;
 
@@ -83,82 +73,197 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (error) throw error;
 
-            spanTotal.innerText = data.length;
+            window.todasInscricoes = data || [];
+            if(inputBusca) inputBusca.value = ''; // reseta a busca
             
-            // Calcula total disponíveis para missões
-            const disponiveis = data.filter(i => i.disponivel_missoes === 'Sim').length;
-            if(spanMissoes) spanMissoes.innerText = disponiveis;
-
-            if (data.length === 0) {
-                container.innerHTML = `<div class="text-center" style="padding: 3rem; color: var(--color-text-muted);">Nenhuma inscrição encontrada até o momento.</div>`;
-                return;
-            }
-
-            const formatDate = (isoString) => {
-                return new Date(isoString).toLocaleDateString('pt-BR');
-            };
-
-            const getBadgeHtml = (text, type) => {
-                const colorClass = type === 'success' ? 'badge-green' : 'badge-gray';
-                return `<span class="badge ${colorClass}">${text}</span>`;
-            };
-
-            // Montar Tabela Modernizada
-            let tableHTML = `
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Nome</th>
-                            <th>Batismo (Águas)</th>
-                            <th>Disp. Missões</th>
-                            <th>Dons</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            data.forEach(item => {
-                const itemJSON = encodeURIComponent(JSON.stringify(item));
-                
-                const missaoBadge = item.disponivel_missoes === 'Sim' ? getBadgeHtml('Sim', 'success') : getBadgeHtml('Não', 'neutral');
-                
-                // Tratar a data de batismo se existir
-                let dtBatismoStr = '-';
-                if(item.data_batismo_aguas) {
-                    const partes = item.data_batismo_aguas.split('-');
-                    if(partes.length === 3) {
-                        dtBatismoStr = `${partes[2]}/${partes[1]}/${partes[0]}`; // YYYY-MM-DD to DD/MM/YYYY
-                    } else {
-                        dtBatismoStr = item.data_batismo_aguas;
-                    }
-                }
-
-                tableHTML += `
-                    <tr onclick="verDetalhes('${itemJSON}')">
-                        <td style="color: var(--color-text-muted);">${formatDate(item.created_at)}</td>
-                        <td style="font-weight: 600; color: var(--color-text);">${item.nome || '-'}</td>
-                        <td>${dtBatismoStr}</td>
-                        <td>${missaoBadge}</td>
-                        <td>${item.cre_dons || '-'}</td>
-                        <td><button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Ver Ficha</button></td>
-                    </tr>
-                `;
-            });
-
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-
-            container.innerHTML = tableHTML;
+            atualizarEstatisticas();
+            renderizarTabela(window.todasInscricoes);
 
         } catch (err) {
             console.error("Erro ao buscar inscrições:", err);
             container.innerHTML = `<div class="text-center" style="padding: 3rem; color: var(--color-error);">❌ Erro ao carregar os dados. Verifique a aba Console (F12).</div>`;
         }
     }
+
+    function atualizarEstatisticas() {
+        const spanTotal = document.getElementById('total-inscritos');
+        const spanMissoes = document.getElementById('total-missoes');
+        if(spanTotal) spanTotal.innerText = window.todasInscricoes.length;
+        if(spanMissoes) {
+            spanMissoes.innerText = window.todasInscricoes.filter(i => i.disponivel_missoes === 'Sim').length;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // Renderizar a Tabela Principal
+    // -------------------------------------------------------------
+    function renderizarTabela(lista) {
+        const container = document.getElementById('lista-inscritos');
+        window.inscricoesFiltradas = lista; // Atualiza a lista atual que estamos vendo
+        
+        if (lista.length === 0) {
+            container.innerHTML = `<div class="text-center" style="padding: 3rem; color: var(--color-text-muted);">Nenhuma inscrição encontrada para essa busca.</div>`;
+            return;
+        }
+
+        const formatDate = (isoString) => new Date(isoString).toLocaleDateString('pt-BR');
+        const getBadgeHtml = (text, type) => `<span class="badge ${type === 'success' ? 'badge-green' : 'badge-gray'}">${text}</span>`;
+
+        let tableHTML = `
+            <table class="admin-table" id="tabela-dados">
+                <thead>
+                    <tr>
+                        <th style="width: 40px; text-align: center;">
+                            <input type="checkbox" id="check-all" onclick="toggleAll(this)">
+                        </th>
+                        <th>Data</th>
+                        <th>Nome</th>
+                        <th>Batismo (Águas)</th>
+                        <th>Disp. Missões</th>
+                        <th>Dons</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        lista.forEach(item => {
+            const itemJSON = encodeURIComponent(JSON.stringify(item));
+            const missaoBadge = item.disponivel_missoes === 'Sim' ? getBadgeHtml('Sim', 'success') : getBadgeHtml('Não', 'neutral');
+            
+            let dtBatismoStr = '-';
+            if(item.data_batismo_aguas) {
+                const partes = item.data_batismo_aguas.split('-');
+                if(partes.length === 3) dtBatismoStr = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                else dtBatismoStr = item.data_batismo_aguas;
+            }
+
+            // O onclick na linha abriria o modal. Precisamos garantir que clicar no checkbox NÃO abra o modal.
+            tableHTML += `
+                <tr class="item-row" data-id="${item.id}">
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
+                        <input type="checkbox" class="check-item" value="${item.id}">
+                    </td>
+                    <td style="color: var(--color-text-muted);" onclick="verDetalhes('${itemJSON}')">${formatDate(item.created_at)}</td>
+                    <td style="font-weight: 600; color: var(--color-text);" onclick="verDetalhes('${itemJSON}')">${item.nome || '-'}</td>
+                    <td onclick="verDetalhes('${itemJSON}')">${dtBatismoStr}</td>
+                    <td onclick="verDetalhes('${itemJSON}')">${missaoBadge}</td>
+                    <td onclick="verDetalhes('${itemJSON}')">${item.cre_dons || '-'}</td>
+                    <td onclick="verDetalhes('${itemJSON}')"><button class="btn btn-outline" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">Ver Ficha</button></td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `</tbody></table>`;
+        container.innerHTML = tableHTML;
+    }
+
+    // -------------------------------------------------------------
+    // Funcionalidades da Toolbar
+    // -------------------------------------------------------------
+    
+    // Busca e Filtro
+    window.filtrarTabela = function() {
+        const termo = document.getElementById('input-busca').value.toLowerCase();
+        if(!termo) {
+            renderizarTabela(window.todasInscricoes);
+            return;
+        }
+        const filtrado = window.todasInscricoes.filter(item => {
+            return (item.nome && item.nome.toLowerCase().includes(termo));
+        });
+        renderizarTabela(filtrado);
+    };
+
+    // Seleção de Checkboxes
+    window.toggleAll = function(source) {
+        const checkboxes = document.querySelectorAll('.check-item');
+        checkboxes.forEach(cb => cb.checked = source.checked);
+    };
+
+    function getIdsSelecionados() {
+        const checkboxes = document.querySelectorAll('.check-item:checked');
+        return Array.from(checkboxes).map(cb => cb.value);
+    }
+
+    // Apagar Selecionados
+    window.apagarSelecionados = async function() {
+        const ids = getIdsSelecionados();
+        if(ids.length === 0) {
+            alert("Selecione pelo menos uma inscrição para apagar.");
+            return;
+        }
+
+        if(!confirm(`Tem certeza absoluta que deseja apagar ${ids.length} inscrição(ões)? Essa ação não pode ser desfeita.`)) {
+            return;
+        }
+
+        try {
+            const adminClient = getSupabaseAdmin();
+            if (!adminClient) throw new Error("Cliente Supabase não configurado.");
+
+            // Supabase permite deletar múltiplos com o .in()
+            const { error } = await adminClient
+                .from('inscricoes')
+                .delete()
+                .in('id', ids);
+
+            if(error) throw error;
+
+            alert("Inscrições deletadas com sucesso!");
+            carregarInscritos(); // Recarrega do banco
+        } catch(err) {
+            console.error(err);
+            alert("Erro ao deletar inscrições. Verifique o console.");
+        }
+    };
+
+    // -------------------------------------------------------------
+    // Impressão da Lista de Presença
+    // -------------------------------------------------------------
+    window.imprimirLista = function(apenasSelecionados) {
+        let listaImpressao = [];
+        
+        if (apenasSelecionados) {
+            const ids = getIdsSelecionados();
+            if(ids.length === 0) {
+                alert("Nenhuma inscrição selecionada. Selecione na tabela ou clique em 'Imprimir Todos'.");
+                return;
+            }
+            listaImpressao = window.todasInscricoes.filter(i => ids.includes(i.id));
+        } else {
+            // Imprime a lista atualmente visível (filtrada ou total)
+            listaImpressao = window.inscricoesFiltradas;
+        }
+
+        if(listaImpressao.length === 0) {
+            alert("Não há dados para imprimir.");
+            return;
+        }
+
+        const tbody = document.getElementById('print-tbody');
+        if(!tbody) return;
+
+        // Ordenar alfabeticamente para a lista de presença
+        const listaOrdenada = [...listaImpressao].sort((a, b) => (a.nome || '').localeCompare(b.nome || ''));
+
+        let html = '';
+        listaOrdenada.forEach((item, index) => {
+            html += `
+                <tr>
+                    <td style="text-align: center;">${index + 1}</td>
+                    <td>${item.nome.toUpperCase()}</td>
+                    <td></td> <!-- Coluna vazia para assinatura -->
+                </tr>
+            `;
+        });
+        
+        tbody.innerHTML = html;
+        
+        // Dispara a impressão do navegador (CSS lida com a ocultação dos painéis)
+        window.print();
+    };
+
 
     // -------------------------------------------------------------
     // Modal de Detalhes
@@ -246,20 +351,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.fecharDetalhes = function() {
         const modal = document.getElementById('modal-detalhes');
-        if (modal) {
-            modal.classList.add('hidden');
-        }
+        if (modal) modal.classList.add('hidden');
     };
     
-    // Fechar modal clicando fora dele
     document.getElementById('modal-detalhes')?.addEventListener('click', function(e) {
-        if(e.target === this) {
-            window.fecharDetalhes();
-        }
+        if(e.target === this) window.fecharDetalhes();
     });
 
     window.logout = Auth.logout;
-
-    // Inicialização
     renderizarTela();
 });

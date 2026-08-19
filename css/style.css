@@ -718,3 +718,65 @@ textarea.form-input {
 .gap-3 { gap: 0.75rem; }
 .relative { position: relative; }
 .z-10 { z-index: 10; }
+
+/* ==========================================================================
+   Impressão (Print Mode)
+   ========================================================================== */
+
+.print-only {
+    display: none;
+}
+
+@media print {
+    /* Ocultar elementos desnecessários na impressão */
+    body {
+        background: white !important;
+    }
+    .admin-login-wrapper,
+    .admin-header,
+    .stats-grid,
+    .toolbar,
+    .modal-overlay,
+    .table-container {
+        display: none !important;
+    }
+
+    /* Mostrar e formatar a lista de impressão */
+    .print-only {
+        display: block !important;
+    }
+    
+    .print-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .print-header h1 {
+        font-size: 18pt;
+        margin: 0;
+        color: black;
+    }
+    
+    .print-header p {
+        font-size: 12pt;
+        color: #333;
+        margin: 5px 0 0 0;
+    }
+    
+    .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12pt;
+    }
+    
+    .print-table th, .print-table td {
+        border: 1px solid #000;
+        padding: 10px;
+        text-align: left;
+    }
+    
+    .print-table th {
+        background-color: #f2f2f2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+}
